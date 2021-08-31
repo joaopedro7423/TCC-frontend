@@ -6,6 +6,7 @@ import {
   Link,
   Stack,
   useColorModeValue,
+  useToast,
 } from "@chakra-ui/react";
 
 import * as yup from "yup";
@@ -15,6 +16,19 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Select } from "components/Select";
 import { useEffect } from "react";
 import { Input } from "components/Input";
+import { api } from "services/api";
+import { useRouter } from "next/router";
+import { useState } from "react";
+
+type CampusResponse = {
+  id: string;
+  name: string;
+};
+
+type CourseResponse = {
+  id: string;
+  name: string;
+};
 
 type CadastroFormData = {
   curso: string;
@@ -35,6 +49,14 @@ const cadastroFormSchema = yup.object().shape({
 
 export default function Cadastro() {
   const formBackground = useColorModeValue("#636363", "#C0BABC");
+  const toast = useToast();
+  const router = useRouter();
+
+  const [campus, setCampus] = useState<CampusResponse[]>([]);
+
+  const [courses, setCourses] = useState<CourseResponse[]>([]);
+
+  const [disable, setDisable] = useState(true);
 
   const {
     register,
@@ -48,8 +70,67 @@ export default function Cadastro() {
     console.log(errors);
   }, [errors]);
 
-  const handleCreateContact: SubmitHandler<CadastroFormData> = (values) => {
+  useEffect(() => {
+    async function GetCampus() {
+      const response = await api.get<CampusResponse[]>("/campus/");
+      setCampus(response.data);
+      //console.log(response);
+    }
+    GetCampus();
+  }, []);
+
+  async function GetCourse(e: any) {
+    
+    if(!e.target.value){
+      setDisable(true)
+      return
+    }else{setDisable(false)}
+
+    const response = await api.get<CourseResponse[]>(
+      `/courses/${e.target.value}`
+    );
+    setCourses(response.data);
+
+    //console.log(response);
+  }
+
+  const handleCreateContact: SubmitHandler<CadastroFormData> = async (
+    values
+  ) => {
     console.log(values);
+
+    try {
+      const reponse = await api.post("/users/", {
+        name: values.nome,
+        email: values.email,
+        password: values.senha,
+        role: values.quem_sou,
+        course_id: values.curso,
+      });
+
+      router.push("/");
+    } catch (error) {
+      console.log(error.response.data);
+      if (error.response) {
+        toast({
+          title: "Erro ao criar a conta.",
+          description: error.response.data.message,
+          status: "error",
+          duration: 4000,
+          isClosable: true,
+          position: "top-right",
+        });
+      } else {
+        toast({
+          title: "Erro ao criar a conta.",
+          description: "Alguma coisa aconteceu.",
+          status: "error",
+          duration: 4000,
+          isClosable: true,
+          position: "top-right",
+        });
+      }
+    }
   };
 
   return (
@@ -75,19 +156,21 @@ export default function Cadastro() {
         >
           <Select
             placeholder="Selecione um Campus:"
-            options={[
-              { value: "unigran", text: "Unigran" },
-              { value: "utf", text: "UTF" },
-            ]}
+            options={campus.map((campu) => ({
+              value: campu.id,
+              text: campu.name,
+            }))}
             {...register("campus")}
             error={errors.campus}
+            onChange={(e) => GetCourse(e)}
           />
           <Select
             placeholder="Selecione um Curso:"
-            options={[
-              { value: "eng.soft", text: "Eng. Software" },
-              { value: "biologia", text: "Biologia" },
-            ]}
+            isDisabled={disable}
+            options={courses.map((course) => ({
+              value: course.id,
+              text: course.name,
+            }))}
             {...register("curso")}
             error={errors.curso}
           />
@@ -125,15 +208,12 @@ export default function Cadastro() {
           <Button type="submit" w="100%" mb={6} colorScheme="telegram">
             Cadastrar
           </Button>
-
-         
-
         </Stack>
         <Link mt={6} href="/" w="100%">
-            <Button w="100%" colorScheme="whiteAlpha">
-              Voltar
-            </Button>
-          </Link>
+          <Button w="100%" colorScheme="whiteAlpha">
+            Voltar
+          </Button>
+        </Link>
       </Flex>
     </Flex>
   );
