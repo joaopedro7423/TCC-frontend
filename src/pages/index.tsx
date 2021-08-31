@@ -14,6 +14,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { useEffect } from "react";
 import { Input } from "../components/Input";
+import { api } from "services/api";
 
 type LogInFormData = {
   email: string;
@@ -40,8 +41,17 @@ const Home = () => {
     console.log(errors);
   }, [errors]);
 
-  const handleCreateContact: SubmitHandler<LogInFormData> = (values) => {
+  const handleLogin: SubmitHandler<LogInFormData> = async (values) => {
     console.log(values);
+    const response = await api.post("/sessions", {
+      email: values.email,
+      password: values.senha,
+    });
+
+    localStorage.setItem('token',response.data.token)
+//    localStorage.removeItem('token')
+
+    console.log(response);
   };
   return (
     <Flex height="100vh" alignItems="center" justifyContent="center">
@@ -61,7 +71,7 @@ const Home = () => {
           w="100%"
           d="block"
           as="form"
-          onSubmit={handleSubmit(handleCreateContact)}
+          onSubmit={handleSubmit(handleLogin)}
         >
           <Input
             placeholder="E-mail: "
