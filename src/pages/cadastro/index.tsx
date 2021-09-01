@@ -1,11 +1,9 @@
 import {
-  Box,
   Button,
   Flex,
   Heading,
   Link,
   Stack,
-  useColorMode,
   useColorModeValue,
   useToast,
 } from "@chakra-ui/react";
@@ -60,6 +58,8 @@ export default function Cadastro() {
 
   const [disable, setDisable] = useState(true);
 
+  const [loading, setLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -97,12 +97,12 @@ export default function Cadastro() {
     //console.log(response);
   }
 
-  const handleCreateUser: SubmitHandler<CadastroFormData> = async (
-    values
-  ) => {
+  const handleCreateUser: SubmitHandler<CadastroFormData> = async (values) => {
     console.log(values);
 
     try {
+      setLoading(true);
+
       const reponse = await api.post("/users/", {
         name: values.nome,
         email: values.email,
@@ -141,6 +141,8 @@ export default function Cadastro() {
           position: "top-right",
         });
       }
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -213,7 +215,13 @@ export default function Cadastro() {
             error={errors.quem_sou}
           />
 
-          <Button type="submit" w="100%" mb={6} colorScheme="telegram">
+          <Button
+            type="submit"
+            w="100%"
+            mb={6}
+            colorScheme="telegram"
+            isLoading={loading}
+          >
             Cadastrar
           </Button>
         </Stack>
