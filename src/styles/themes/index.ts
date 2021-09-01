@@ -9,7 +9,7 @@ export const theme = extendTheme({
   colors: {
     cinza: {
       "500": "#ddd",
-      "600": "cinza",
+      "600": "#636363",
     },
     amarelo: {
       "400": "#F2E94E",
@@ -25,9 +25,9 @@ export const theme = extendTheme({
         textDecoration: "none !important",
       },
       body: {
-        bg: "#ddd",
+      
       },
     },
   },
-  config,
+  config
 });

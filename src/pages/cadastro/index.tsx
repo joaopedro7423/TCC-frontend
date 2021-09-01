@@ -5,6 +5,7 @@ import {
   Heading,
   Link,
   Stack,
+  useColorMode,
   useColorModeValue,
   useToast,
 } from "@chakra-ui/react";
@@ -80,11 +81,12 @@ export default function Cadastro() {
   }, []);
 
   async function GetCourse(e: any) {
-    
-    if(!e.target.value){
-      setDisable(true)
-      return
-    }else{setDisable(false)}
+    if (!e.target.value) {
+      setDisable(true);
+      return;
+    } else {
+      setDisable(false);
+    }
 
     const response = await api.get<CourseResponse[]>(
       `/courses/${e.target.value}`
@@ -132,19 +134,19 @@ export default function Cadastro() {
       }
     }
   };
-
   return (
     <Flex height="100vh" alignItems="center" justifyContent="center">
       <Flex
         direction="column"
         p={12}
         rounded={6}
-        bg={formBackground}
         alignItems="center"
         w={{ md: "30%", sm: "100%" }}
         mx="auto"
+        outline="2px black"
+        boxShadow="dark-lg"
       >
-        <Heading color="#F2E94E" mb={6}>
+        <Heading color="black" mb={6}>
           Cadastro
         </Heading>
         <Stack
@@ -177,21 +179,18 @@ export default function Cadastro() {
           <Input
             placeholder="Nome:"
             type="name"
-            color="white"
             {...register("nome")}
             error={errors.nome}
           />
           <Input
             placeholder="Email: "
             type="email"
-            color="white"
             {...register("email")}
             error={errors.email}
           />
           <Input
             placeholder="Senha:"
             type="password"
-            color="white"
             {...register("senha")}
             error={errors.senha}
           />
@@ -210,7 +209,7 @@ export default function Cadastro() {
           </Button>
         </Stack>
         <Link mt={6} href="/" w="100%">
-          <Button w="100%" colorScheme="whiteAlpha">
+          <Button w="100%" colorScheme="blackAlpha">
             Voltar
           </Button>
         </Link>
