@@ -5,7 +5,9 @@ import {
   Heading,
   Link,
   Stack,
+  toast,
   useColorModeValue,
+  useToast,
 } from "@chakra-ui/react";
 
 import * as yup from "yup";
@@ -15,6 +17,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { Input } from "../components/Input";
 import { api } from "services/api";
+import { useRouter } from "next/router";
 
 type LogInFormData = {
   email: string;
@@ -22,12 +25,15 @@ type LogInFormData = {
 };
 
 const LogInFormSchema = yup.object().shape({
-  email: yup.string().required("E-mail obrigatório").email("E-mail inválido"),
+  email: yup.string().required("E-mail obrigatório").email("E-mail incorreto"),
   senha: yup.string().required("Senha obrigatória"),
 });
 
 const Home = () => {
   const formBackground = useColorModeValue("#636363", "#C0BABC");
+
+  const toast = useToast();
+  const router = useRouter();
 
   const {
     register,
@@ -43,15 +49,37 @@ const Home = () => {
 
   const handleLogin: SubmitHandler<LogInFormData> = async (values) => {
     console.log(values);
-    const response = await api.post("/sessions", {
-      email: values.email,
-      password: values.senha,
-    });
 
-    localStorage.setItem("token", response.data.token);
-    //    localStorage.removeItem('token')
+    try {
+      const response = await api.post("/sessions", {
+        email: values.email,
+        password: values.senha,
+      });
 
-    console.log(response);
+      localStorage.setItem("token", response.data.token);
+      //    localStorage.removeItem('token')
+      console.log(response);
+    } catch (error) {
+      if (error.response) {
+        toast({
+          title: "Erro ao criar a conta.",
+          description: error.response.data.message,
+          status: "error",
+          duration: 4000,
+          isClosable: true,
+          position: "top-right",
+        });
+      } else {
+        toast({
+          title: "Erro ao criar a conta.",
+          description: "Alguma coisa aconteceu.",
+          status: "error",
+          duration: 4000,
+          isClosable: true,
+          position: "top-right",
+        });
+      }
+    }
   };
   return (
     <Flex height="100vh" alignItems="center" justifyContent="center">

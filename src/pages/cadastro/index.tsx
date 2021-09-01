@@ -50,6 +50,7 @@ const cadastroFormSchema = yup.object().shape({
 
 export default function Cadastro() {
   const formBackground = useColorModeValue("#636363", "#C0BABC");
+
   const toast = useToast();
   const router = useRouter();
 
@@ -96,7 +97,7 @@ export default function Cadastro() {
     //console.log(response);
   }
 
-  const handleCreateContact: SubmitHandler<CadastroFormData> = async (
+  const handleCreateUser: SubmitHandler<CadastroFormData> = async (
     values
   ) => {
     console.log(values);
@@ -108,6 +109,14 @@ export default function Cadastro() {
         password: values.senha,
         role: values.quem_sou,
         course_id: values.curso,
+      });
+      toast({
+        title: "Sucesso !!!",
+        description: "Sucesso ao criar seu usuário",
+        status: "success",
+        duration: 4000,
+        isClosable: true,
+        position: "top-right",
       });
 
       router.push("/");
@@ -154,7 +163,7 @@ export default function Cadastro() {
           w="100%"
           d="block"
           as="form"
-          onSubmit={handleSubmit(handleCreateContact)}
+          onSubmit={handleSubmit(handleCreateUser)}
         >
           <Select
             placeholder="Selecione um Campus:"

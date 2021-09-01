@@ -5,9 +5,9 @@ import { theme } from "styles/themes";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ChakraProvider theme={theme} resetCSS >
-      <Component {...pageProps} />
-    </ChakraProvider>
+      <ChakraProvider theme={theme} resetCSS>
+        <Component {...pageProps} />
+      </ChakraProvider>
   );
 }
 export default MyApp;
