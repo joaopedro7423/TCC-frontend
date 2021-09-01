@@ -48,8 +48,8 @@ const Home = () => {
       password: values.senha,
     });
 
-    localStorage.setItem('token',response.data.token)
-//    localStorage.removeItem('token')
+    localStorage.setItem("token", response.data.token);
+    //    localStorage.removeItem('token')
 
     console.log(response);
   };
@@ -59,12 +59,12 @@ const Home = () => {
         direction="column"
         p={12}
         rounded={6}
-        bg={formBackground}
         alignItems="center"
         w={{ md: "30%", sm: "100%" }}
         mx="auto"
+        boxShadow="dark-lg"
       >
-        <Heading color="#F2E94E" mb={6}>
+        <Heading color="balck" mb={6}>
           Entrar
         </Heading>
         <Stack
@@ -77,7 +77,6 @@ const Home = () => {
             placeholder="E-mail: "
             mb={3}
             type="email"
-            color="white"
             {...register("email")}
             error={errors.email}
           />
@@ -85,7 +84,6 @@ const Home = () => {
             placeholder="Senha:"
             mb={3}
             type="password"
-            color="white"
             {...register("senha")}
             error={errors.senha}
           />
@@ -95,7 +93,7 @@ const Home = () => {
           </Button>
         </Stack>
         <Link mt={6} href="/cadastro" w="100%">
-          <Button w="100%" colorScheme="whiteAlpha">
+          <Button w="100%" colorScheme="blackAlpha">
             Inscreva-se
           </Button>
         </Link>
