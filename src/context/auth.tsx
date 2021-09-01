@@ -42,7 +42,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       if (token && user) {
         return { token, user };
       }
-      
+
     }
 
     return {} as IAuthState;
@@ -68,8 +68,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   const signOut = useCallback(() => {
-    destroyCookie(null, "cookieName");
-
+    destroyCookie(null, "TccToken");
     setData({} as IAuthState);
   }, []);
 
