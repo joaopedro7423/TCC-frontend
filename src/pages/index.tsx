@@ -14,10 +14,12 @@ import * as yup from "yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Input } from "../components/Input";
 import { api } from "services/api";
 import { useRouter } from "next/router";
+import { AuthContext } from "context/auth";
+import ICredentiasUser from "interfaces/credentialsUsers";
 
 type LogInFormData = {
   email: string;
@@ -26,7 +28,7 @@ type LogInFormData = {
 
 const LogInFormSchema = yup.object().shape({
   email: yup.string().required("E-mail obrigatório").email("E-mail incorreto"),
-  senha: yup.string().required("Senha obrigatória"),
+  password: yup.string().required("Senha obrigatória"),
 });
 
 const Home = () => {
@@ -34,6 +36,14 @@ const Home = () => {
 
   const toast = useToast();
   const router = useRouter();
+
+  const { token, user, signIn } = useContext(AuthContext);
+
+  
+  useEffect(() => {
+    console.log(user);
+    console.log(token);
+  }, [user, token]);
 
   const {
     register,
@@ -47,22 +57,28 @@ const Home = () => {
     console.log(errors);
   }, [errors]);
 
-  const handleLogin: SubmitHandler<LogInFormData> = async (values) => {
+  const handleLogin: SubmitHandler<ICredentiasUser> = async (
+    values: ICredentiasUser
+  ) => {
     console.log(values);
 
     try {
+      await signIn(values);
+
+      /*
       const response = await api.post("/sessions", {
         email: values.email,
         password: values.senha,
       });
-
-      localStorage.setItem("token", response.data.token);
+*/
+      //localStorage.setItem("token", response.data.token);
       //    localStorage.removeItem('token')
-      console.log(response);
+
+      //console.log(response);
     } catch (error) {
       if (error.response) {
         toast({
-          title: "Erro ao criar a conta.",
+          title: "Erro ao autenticar a conta.",
           description: error.response.data.message,
           status: "error",
           duration: 4000,
@@ -71,7 +87,7 @@ const Home = () => {
         });
       } else {
         toast({
-          title: "Erro ao criar a conta.",
+          title: "Erro ao autenticar a conta.",
           description: "Alguma coisa aconteceu.",
           status: "error",
           duration: 4000,
@@ -80,6 +96,7 @@ const Home = () => {
         });
       }
     }
+    [signIn];
   };
   return (
     <Flex height="100vh" alignItems="center" justifyContent="center">
@@ -112,8 +129,8 @@ const Home = () => {
             placeholder="Senha:"
             mb={3}
             type="password"
-            {...register("senha")}
-            error={errors.senha}
+            {...register("password")}
+            error={errors.password}
           />
 
           <Button type="submit" w="100%" mb={6} colorScheme="telegram">
