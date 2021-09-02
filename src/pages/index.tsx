@@ -14,7 +14,7 @@ import * as yup from "yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Input } from "../components/Input";
 import { api } from "services/api";
 import { useRouter } from "next/router";
@@ -39,7 +39,8 @@ const Home = () => {
 
   const { token, user, signIn } = useContext(AuthContext);
 
-  
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     console.log(user);
     console.log(token);
@@ -63,6 +64,8 @@ const Home = () => {
     console.log(values);
 
     try {
+      setLoading(true);
+
       await signIn(values);
 
       /*
@@ -95,6 +98,8 @@ const Home = () => {
           position: "top-right",
         });
       }
+    } finally {
+      setLoading(false);
     }
     [signIn];
   };
@@ -133,7 +138,7 @@ const Home = () => {
             error={errors.password}
           />
 
-          <Button type="submit" w="100%" mb={6} colorScheme="telegram">
+          <Button type="submit" w="100%" mb={6} colorScheme="telegram"   isLoading={loading}>
             Log In
           </Button>
         </Stack>

@@ -109,7 +109,13 @@ export default function Cadastro() {
         password: values.senha,
         role: values.quem_sou,
         course_id: values.curso,
-      });
+      },
+      /* {
+        headers: {
+          authorization: `Bearear ${}`
+        }
+      }*/
+      );
       toast({
         title: "Sucesso !!!",
         description: "Sucesso ao criar seu usuário",
