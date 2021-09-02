@@ -68,6 +68,15 @@ const Home = () => {
 
       await signIn(values);
 
+      toast({
+        title: "Sucesso",
+        description: "Você agora está logado.",
+        status: "success",
+        duration: 4000,
+        isClosable: true,
+        position: "top-right",
+      });
+
       /*
       const response = await api.post("/sessions", {
         email: values.email,
