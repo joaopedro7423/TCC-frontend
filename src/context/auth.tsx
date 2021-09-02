@@ -20,7 +20,7 @@ interface IAuthState {
   user: IUser;
 }
 
-interface IAuthContextState {
+export interface IAuthContextState {
   user: IUser; //objeto com os dados do usuario que será passado como variavel global para todos
   token: string;
   signIn(credentials: ICredentiasUser): Promise<void>;
@@ -42,7 +42,6 @@ export const AuthProvider: React.FC = ({ children }) => {
       if (token && user) {
         return { token, user };
       }
-
     }
 
     return {} as IAuthState;

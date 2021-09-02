@@ -1,11 +1,9 @@
 import {
-  Box,
   Button,
   Flex,
   Heading,
   Link,
   Stack,
-  toast,
   useColorModeValue,
   useToast,
 } from "@chakra-ui/react";
@@ -14,12 +12,11 @@ import * as yup from "yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "../components/Input";
-import { api } from "services/api";
 import { useRouter } from "next/router";
-import { AuthContext } from "context/auth";
 import ICredentiasUser from "interfaces/credentialsUsers";
+import useAuth from "hooks/auth";
 
 type LogInFormData = {
   email: string;
@@ -37,7 +34,7 @@ const Home = () => {
   const toast = useToast();
   const router = useRouter();
 
-  const { token, user, signIn } = useContext(AuthContext);
+  const { token, user, signIn } = useAuth(); //esssa disgraça vira um hook kkkk
 
   const [loading, setLoading] = useState(false);
 
@@ -147,7 +144,13 @@ const Home = () => {
             error={errors.password}
           />
 
-          <Button type="submit" w="100%" mb={6} colorScheme="telegram"   isLoading={loading}>
+          <Button
+            type="submit"
+            w="100%"
+            mb={6}
+            colorScheme="telegram"
+            isLoading={loading}
+          >
             Log In
           </Button>
         </Stack>
