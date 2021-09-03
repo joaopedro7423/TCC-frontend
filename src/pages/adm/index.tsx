@@ -3,7 +3,6 @@ import {
   Center,
   Flex,
   Heading,
-  Link,
   Stack,
   useColorModeValue,
   useToast,
@@ -14,25 +13,15 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { useEffect, useState } from "react";
-import { Input } from "../../components/Input";
 import { useRouter } from "next/router";
-import ICredentiasUser from "interfaces/credentialsUsers";
 import useAuth from "hooks/auth";
-import { parseCookies } from "nookies";
-import { getCookieParser } from "next/dist/server/api-utils";
-
-const LogInFormSchema = yup.object().shape({
-  email: yup.string().required("E-mail obrigatório").email("E-mail incorreto"),
-  password: yup.string().required("Senha obrigatória"),
-});
 
 const Adm = () => {
-  const formBackground = useColorModeValue("#636363", "#C0BABC");
-
   const toast = useToast();
+
   const router = useRouter();
 
-  const { user } = useAuth(); //esssa disgraça vira um hook kkkk
+  const { user, token, signOut } = useAuth(); //esssa disgraça vira um hook kkkk
 
   const [loading, setLoading] = useState(false);
 
@@ -42,53 +31,34 @@ const Adm = () => {
   }, [user]);
 
   const {
-    register,
     handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(LogInFormSchema),
-  });
+  } = useForm();
 
-  useEffect(() => {
-    //console.log(errors);
-  }, [errors]);
-
-  const handleLogin: SubmitHandler<ICredentiasUser> = async (
-    values: ICredentiasUser
-  ) => {
+  const handleLogout = async () => {
     //console.log(values);
 
     try {
       setLoading(true);
 
+      await signOut();
+
       toast({
         title: "Sucesso",
-        description: "Você agora está logado.",
+        description: "Você agora está Deslogado.",
         status: "success",
         duration: 4000,
         isClosable: true,
         position: "top-right",
       });
     } catch (error) {
-      if (error.response) {
-        toast({
-          title: "Erro ao autenticar a conta.",
-          description: error.response.data.message,
-          status: "error",
-          duration: 4000,
-          isClosable: true,
-          position: "top-right",
-        });
-      } else {
-        toast({
-          title: "Erro ao autenticar a conta.",
-          description: "Alguma coisa aconteceu.",
-          status: "error",
-          duration: 4000,
-          isClosable: true,
-          position: "top-right",
-        });
-      }
+      toast({
+        title: "Erro ao Deslogar a conta.",
+        description: "Alguma coisa aconteceu.",
+        status: "error",
+        duration: 4000,
+        isClosable: true,
+        position: "top-right",
+      });
     } finally {
       setLoading(false);
     }
@@ -102,8 +72,7 @@ const Adm = () => {
       <>
         <Center>
           <Stack>
-            <Heading as="h4">Você não tem permissão para essa rota</Heading>
-            <Heading as="h4">ou não está logado</Heading>
+            <Heading as="h4">Você não está logado</Heading>
           </Stack>
         </Center>
       </>
@@ -129,45 +98,29 @@ const Adm = () => {
           mx="auto"
           boxShadow="dark-lg"
         >
-          <Heading color="balck" mb={6}>
-            Entrar
+          <Heading color="balck" mb={2}>
+            Seja bem vindo!
           </Heading>
+          <Heading  color="balck" mb={6}>
+            {user.name}
+          </Heading>
+
           <Stack
             w="100%"
             d="block"
             as="form"
-            onSubmit={handleSubmit(handleLogin)}
+            onSubmit={handleSubmit(handleLogout)}
           >
-            <Input
-              placeholder="E-mail: "
-              mb={3}
-              type="email"
-              {...register("email")}
-              error={errors.email}
-            />
-            <Input
-              placeholder="Senha:"
-              mb={3}
-              type="password"
-              {...register("password")}
-              error={errors.password}
-            />
-
             <Button
               type="submit"
               w="100%"
               mb={6}
-              colorScheme="telegram"
+              colorScheme="red"
               isLoading={loading}
             >
-              Log In
+              Log Out
             </Button>
           </Stack>
-          <Link mt={6} href="/cadastro" w="100%">
-            <Button w="100%" colorScheme="blackAlpha">
-              Inscreva-se
-            </Button>
-          </Link>
         </Flex>
       </Flex>
     );

@@ -13,7 +13,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { useEffect, useState } from "react";
-import { Input } from "../components/Input";
+import { Input } from "../components/shared/Input";
 import { useRouter } from "next/router";
 import ICredentiasUser from "interfaces/credentialsUsers";
 import useAuth from "hooks/auth";

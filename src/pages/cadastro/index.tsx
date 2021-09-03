@@ -12,9 +12,9 @@ import * as yup from "yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { Select } from "components/Select";
+import { Select } from "components/shared/Select";
 import { useEffect } from "react";
-import { Input } from "components/Input";
+import { Input } from "components/shared/Input";
 import { api } from "services/api";
 import { useRouter } from "next/router";
 import { useState } from "react";
