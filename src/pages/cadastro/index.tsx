@@ -18,6 +18,7 @@ import { Input } from "components/shared/Input";
 import { api } from "services/api";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { withSSRGuest } from "utils/auth/redirectAuth";
 
 type CampusResponse = {
   id: string;
@@ -242,3 +243,11 @@ export default function Cadastro() {
     </Flex>
   );
 }
+
+
+export const getServerSideProps = withSSRGuest(async (ctx) => {
+  
+  return {
+    props: {},
+  };
+});
