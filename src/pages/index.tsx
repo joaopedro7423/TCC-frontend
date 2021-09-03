@@ -17,6 +17,7 @@ import { Input } from "../components/shared/Input";
 import { useRouter } from "next/router";
 import ICredentiasUser from "interfaces/credentialsUsers";
 import useAuth from "hooks/auth";
+import { withSSRGuest } from "utils/auth/redirectAuth";
 
 type LogInFormData = {
   email: string;
@@ -167,5 +168,12 @@ const Home = () => {
     </Flex>
   );
 };
+
+export const getServerSideProps = withSSRGuest(async (ctx) => {
+  
+  return {
+    props: {},
+  };
+});
 
 export default Home;
