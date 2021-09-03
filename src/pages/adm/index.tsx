@@ -1,38 +1,45 @@
 import {
+  Box,
   Button,
   Center,
   Flex,
   Heading,
   Stack,
+  Text,
   useColorModeValue,
   useToast,
 } from "@chakra-ui/react";
 
-import * as yup from "yup";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { useContext, useEffect, useState } from "react";
+
 import useAuth from "hooks/auth";
+import { useRouter } from "next/router";
+import { AuthContext } from "context/auth";
+import { withSSRAuthenticated } from "utils/auth/renderAuth";
 
 const Adm = () => {
   const toast = useToast();
 
   const router = useRouter();
 
-  const { user, token, signOut } = useAuth(); //esssa disgraça vira um hook kkkk
-
+  const { user, token, signOut } = useContext(AuthContext); //esssa disgraça vira um hook kkkk
+  
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    console.log(user);
-    //console.log(token);
-  }, [user]);
+  const { handleSubmit } = useForm();
+/*
+//verificando pelo client
+  useEffect(()=>{
+    if (!user || user.role !="adm") {
+      router.push("/");
+    }
+  
+  },[])
 
-  const {
-    handleSubmit,
-  } = useForm();
+*/
+
 
   const handleLogout = async () => {
     //console.log(values);
@@ -50,6 +57,8 @@ const Adm = () => {
         isClosable: true,
         position: "top-right",
       });
+
+      router.push("/");
     } catch (error) {
       toast({
         title: "Erro ao Deslogar a conta.",
@@ -67,44 +76,26 @@ const Adm = () => {
 
   //console.log(user.role)
 
-  if (!user) {
-    return (
-      <>
-        <Center>
-          <Stack>
-            <Heading as="h4">Você não está logado</Heading>
-          </Stack>
-        </Center>
-      </>
-    );
-  } else if (user.role != "adm") {
-    return (
-      <>
-        <Center>
-          <Heading as="h4">Você não tem permissão para essa rota</Heading>
-        </Center>
-      </>
-    );
-  } else if (user == undefined) router.push("/");
-  {
-    return (
+  return (
+    <>
       <Flex height="100vh" alignItems="center" justifyContent="center">
         <Flex
           direction="column"
           p={12}
           rounded={6}
           alignItems="center"
-          w={{ md: "30%", sm: "100%" }}
+          w={{ md: "50%", sm: "100%" }}
           mx="auto"
           boxShadow="dark-lg"
         >
-          <Heading color="balck" mb={2}>
-            Seja bem vindo!
-          </Heading>
-          <Heading  color="balck" mb={6}>
-            {user.name}
-          </Heading>
-
+          <Box>
+            <Heading as="h2" color="balck" mb={2}>
+              Seja bem vindo!
+            </Heading>
+            <Heading color="balck" mb={6}>
+              {user?.name }
+            </Heading>
+          </Box>
           <Stack
             w="100%"
             d="block"
@@ -123,7 +114,37 @@ const Adm = () => {
           </Stack>
         </Flex>
       </Flex>
-    );
-  }
+    </>
+  );
 };
 export default Adm;
+
+//verificando pelo server 
+export const getServerSideProps = withSSRAuthenticated(async (ctx) => {
+
+  return {
+    props: {},
+  };
+});
+
+
+/*
+function Component() {
+
+    const userCanSeeButton = useCan("student")
+
+    return (
+        <>
+
+        <Can permission="adm">
+            <Text>Só adm pode ver</Text>
+            <Button>Adm</Button>
+        </Can>
+
+      {userCanSeeButton &&  <Button>Enviar Atividade</Button>}
+      </>
+    )
+}
+issoé do repositorio do git do lucas uma função do components que da a permissão de acesso a sua escolha
+e fazer o hook do can
+*/
