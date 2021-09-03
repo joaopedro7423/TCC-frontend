@@ -69,14 +69,15 @@ export default function Cadastro() {
   });
 
   useEffect(() => {
-    console.log(errors);
+    //console.log(errors);
   }, [errors]);
 
   useEffect(() => {
     async function GetCampus() {
       const response = await api.get<CampusResponse[]>("/campus/");
+      
       setCampus(response.data);
-      //console.log(response);
+      ////console.log(response);
     }
     GetCampus();
   }, []);
@@ -94,11 +95,11 @@ export default function Cadastro() {
     );
     setCourses(response.data);
 
-    //console.log(response);
+    ////console.log(response);
   }
 
   const handleCreateUser: SubmitHandler<CadastroFormData> = async (values) => {
-    console.log(values);
+    //console.log(values);
 
     try {
       setLoading(true);
@@ -126,8 +127,9 @@ export default function Cadastro() {
       });
 
       router.push("/");
+
     } catch (error) {
-      console.log(error.response.data);
+      //console.log(error.response.data);
       if (error.response) {
         toast({
           title: "Erro ao criar a conta.",

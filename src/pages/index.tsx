@@ -39,8 +39,8 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    console.log(user);
-    console.log(token);
+    //console.log(user);
+    //console.log(token);
   }, [user, token]);
 
   const {
@@ -52,13 +52,13 @@ const Home = () => {
   });
 
   useEffect(() => {
-    console.log(errors);
+    //console.log(errors);
   }, [errors]);
 
   const handleLogin: SubmitHandler<ICredentiasUser> = async (
     values: ICredentiasUser
   ) => {
-    console.log(values);
+    //console.log(values);
 
     try {
       setLoading(true);
@@ -74,6 +74,10 @@ const Home = () => {
         position: "top-right",
       });
 
+      //console.log(user)
+      router.push("/adm");
+      
+      
       /*
       const response = await api.post("/sessions", {
         email: values.email,
@@ -83,7 +87,7 @@ const Home = () => {
       //localStorage.setItem("token", response.data.token);
       //    localStorage.removeItem('token')
 
-      //console.log(response);
+      ////console.log(response);
     } catch (error) {
       if (error.response) {
         toast({
