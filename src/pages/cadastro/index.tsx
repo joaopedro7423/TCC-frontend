@@ -76,7 +76,7 @@ export default function Cadastro() {
   useEffect(() => {
     async function GetCampus() {
       const response = await api.get<CampusResponse[]>("/campus/");
-      
+
       setCampus(response.data);
       ////console.log(response);
     }
@@ -105,14 +105,16 @@ export default function Cadastro() {
     try {
       setLoading(true);
 
-      const reponse = await api.post("/users/", {
-        name: values.nome,
-        email: values.email,
-        password: values.senha,
-        role: values.quem_sou,
-        course_id: values.curso,
-      },
-      /* {
+      const reponse = await api.post(
+        "/users/",
+        {
+          name: values.nome,
+          email: values.email,
+          password: values.senha,
+          role: values.quem_sou,
+          course_id: values.curso,
+        }
+        /* {
         headers: {
           authorization: `Bearear ${}`
         }
@@ -128,8 +130,7 @@ export default function Cadastro() {
       });
 
       router.push("/");
-
-    } catch (error) {
+    } catch (error: any) {
       //console.log(error.response.data);
       if (error.response) {
         toast({
@@ -244,9 +245,7 @@ export default function Cadastro() {
   );
 }
 
-
 export const getServerSideProps = withSSRGuest(async (ctx) => {
-  
   return {
     props: {},
   };

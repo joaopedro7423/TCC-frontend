@@ -77,8 +77,7 @@ const Home = () => {
 
       //console.log(user)
       router.push("/adm");
-      
-      
+
       /*
       const response = await api.post("/sessions", {
         email: values.email,
@@ -89,7 +88,7 @@ const Home = () => {
       //    localStorage.removeItem('token')
 
       ////console.log(response);
-    } catch (error) {
+    } catch (error: any) {
       if (error.response) {
         toast({
           title: "Erro ao autenticar a conta.",
@@ -170,7 +169,6 @@ const Home = () => {
 };
 
 export const getServerSideProps = withSSRGuest(async (ctx) => {
-  
   return {
     props: {},
   };
