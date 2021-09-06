@@ -74,6 +74,7 @@ export default function EditarCampus(campus: IdCampusProps) {
         position: "top-right",
       });
       onClose();
+      window.location.reload();
     } catch (error: any) {
       //console.log(error.response.data);
       if (error.response) {

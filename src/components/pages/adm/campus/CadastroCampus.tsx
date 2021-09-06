@@ -63,6 +63,7 @@ export function CadastroCampus() {
         isClosable: true,
         position: "top-right",
       });
+      window.location.reload();
     } catch (error: any) {
       //console.log(error.response.data);
       if (error.response) {

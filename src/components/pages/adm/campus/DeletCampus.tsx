@@ -33,7 +33,7 @@ export default function DeletCampus(campus: IdCampusProps) {
         isClosable: true,
         position: "top-right",
       });
-      //   router.reload(window.location.pathname);
+      window.location.reload();
     } catch (error: any) {
       if (error.response) {
         toast({

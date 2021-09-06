@@ -28,7 +28,7 @@ export function ListarCampus() {
       ////console.log(response);
     }
     GetCampus();
-  }, [DeletCampus]);
+  }, [DeletCampus, EditarCampus]);
 
   return (
     <>
