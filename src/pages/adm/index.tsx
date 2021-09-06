@@ -14,10 +14,10 @@ import { useForm } from "react-hook-form";
 
 import { useContext, useEffect, useState } from "react";
 
-import useAuth from "hooks/auth";
 import { useRouter } from "next/router";
 import { AuthContext } from "context/auth";
 import { withSSRAuthenticated } from "utils/auth/renderAuth";
+import SidebarWithHeader from "components/shared/header";
 
 const Adm = () => {
   const toast = useToast();
@@ -25,21 +25,17 @@ const Adm = () => {
   const router = useRouter();
 
   const { user, token, signOut } = useContext(AuthContext); //esssa disgraça vira um hook kkkk
-  
+
   const [loading, setLoading] = useState(false);
 
   const { handleSubmit } = useForm();
-/*
-//verificando pelo client
-  useEffect(()=>{
-    if (!user || user.role !="adm") {
+
+  //verificando pelo client
+  useEffect(() => {
+    if (!user || user.role != "adm") {
       router.push("/");
     }
-  
-  },[])
-
-*/
-
+  }, []);
 
   const handleLogout = async () => {
     //console.log(values);
@@ -78,55 +74,39 @@ const Adm = () => {
 
   return (
     <>
-      <Flex height="100vh" alignItems="center" justifyContent="center">
-        <Flex
-          direction="column"
-          p={12}
-          rounded={6}
-          alignItems="center"
-          w={{ md: "50%", sm: "100%" }}
-          mx="auto"
-          boxShadow="dark-lg"
-        >
-          <Box>
-            <Heading as="h2" color="balck" mb={2}>
-              Seja bem vindo!
-            </Heading>
-            <Heading color="balck" mb={6}>
-              {user?.name }
-            </Heading>
-          </Box>
-          <Stack
-            w="100%"
-            d="block"
-            as="form"
-            onSubmit={handleSubmit(handleLogout)}
+      <SidebarWithHeader>
+        <Flex height="50vh" alignItems="center" justifyContent="center">
+          <Flex
+            direction="column"
+            p={12}
+            rounded={6}
+            alignItems="center"
+            w={{ md: "100%", sm: "100%", lg: "50%" }}
+            mx="auto"
+            boxShadow="dark-lg"
           >
-            <Button
-              type="submit"
-              w="100%"
-              mb={6}
-              colorScheme="red"
-              isLoading={loading}
-            >
-              Log Out
-            </Button>
-          </Stack>
+            <Box>
+              <Heading as="h2" color="balck" mb={2}>
+                Seja bem vindo!
+              </Heading>
+              <Heading color="balck" mb={6}>
+                {user?.name}
+              </Heading>
+            </Box>
+          </Flex>
         </Flex>
-      </Flex>
+      </SidebarWithHeader>
     </>
   );
 };
 export default Adm;
 
-//verificando pelo server 
+//verificando pelo server
 export const getServerSideProps = withSSRAuthenticated(async (ctx) => {
-
   return {
     props: {},
   };
 });
-
 
 /*
 function Component() {
