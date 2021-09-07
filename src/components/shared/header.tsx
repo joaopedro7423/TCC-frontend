@@ -23,20 +23,12 @@ import {
   MenuList,
   useToast,
 } from "@chakra-ui/react";
-import {
-  FiHome,
-  FiTrendingUp,
-  FiCompass,
-  FiStar,
-  FiSettings,
-  FiMenu,
-  FiChevronDown,
-} from "react-icons/fi";
+import { FiHome, FiMenu, FiChevronDown } from "react-icons/fi";
 import { IconType } from "react-icons";
-import { ReactText } from "react";
-import { AuthContext } from "context/auth";
-import router from "next/router";
 import { IoBookOutline } from "react-icons/io5";
+import { AuthContext } from "context/auth";
+import { ReactText } from "react";
+import router from "next/router";
 import NextLink from "next/link";
 
 interface LinkItemProps {
