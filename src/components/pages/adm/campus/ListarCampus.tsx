@@ -40,13 +40,13 @@ export function ListarCampus() {
           </Tr>
         </Thead>
         <Tbody>
-          {campus.map((item) => (
-            <Tr>
+          {campus.map((item, index) => (
+            <Tr key={index}>
               <Td>{item.name}</Td>
               <Td>
                 <Flex>
-                  <EditarCampus key={item.id} id={item.id} name={item.name} />
-                  <DeletCampus key={item.id} id={item.id} />
+                  <EditarCampus id={item.id} name={item.name} />
+                  <DeletCampus id={item.id} />
                 </Flex>
               </Td>
             </Tr>
