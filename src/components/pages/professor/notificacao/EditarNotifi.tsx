@@ -113,6 +113,10 @@ export default function EditarNotifi(notifi: IdCampusProps) {
           <ModalCloseButton />
           <ModalBody pb={6}>
             <Textarea
+              h={12}
+              size="lg"
+              borderColor="black"
+              variant="filled"
               placeholder="Descrição:"
               type="description"
               {...register("description")}

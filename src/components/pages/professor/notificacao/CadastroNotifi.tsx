@@ -92,6 +92,7 @@ export function CadastroNotifi() {
     <>
       <HStack w="100%" as="form" onSubmit={handleSubmit(handleCreateCurso)}>
         <Textarea
+          borderColor="black"
           placeholder="Descrição da notificação:"
           type="name"
           {...register("descricao")}
