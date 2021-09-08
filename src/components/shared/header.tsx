@@ -37,7 +37,7 @@ interface LinkItemProps {
   link: string;
 }
 const LinkItems: Array<LinkItemProps> = [
-  { name: "Campus", icon: FiHome, link: "/campus" },
+  { name: "Campus", icon: FiHome, link: "adm/campus" },
   { name: "Cursos", icon: IoBookOutline, link: "adm/curso" },
 ];
 
@@ -165,7 +165,8 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         position: "top-right",
       });
 
-      router.push("/");
+      router.replace("/");
+
     } catch (error) {
       toast({
         title: "Erro ao Deslogar a conta.",
