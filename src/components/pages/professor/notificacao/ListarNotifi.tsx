@@ -41,7 +41,7 @@ export function ListarNotifi() {
         <Tbody>
           {notificacao.map((item, index) => (
             <Tr key={index}>
-              <Td>{item.description}</Td>
+              <Td noOfLines={1}>{item.description}</Td>
               <Td>
                 <Flex>
                   <EditarNotifi id={item.id} description={item.description} />
