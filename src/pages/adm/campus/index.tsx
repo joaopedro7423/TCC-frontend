@@ -88,7 +88,7 @@ export const getServerSideProps = withSSRAuthenticated(async (ctx) => {
   return {
     props: {},
   };
-});
+},{roles:["adm"]});
 
 /*
 function Component() {
