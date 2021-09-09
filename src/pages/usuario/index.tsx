@@ -12,7 +12,7 @@ import {
 import { useContext, useEffect, useState } from "react";
 
 import { useRouter } from "next/router";
-import { AuthContext } from "context/auth";
+import { AuthContext, IUser } from "context/auth";
 import { withSSRAuthenticated } from "utils/auth/renderAuth";
 import SidebarWithHeader from "components/shared/header";
 
@@ -26,31 +26,19 @@ import { api } from "services/api";
 import { withSSRGuest } from "utils/auth/redirectAuth";
 import ICredentiasUser from "interfaces/credentialsUsers";
 
-type CampusResponse = {
-  id: string;
-  name: string;
-};
-
-type CourseResponse = {
-  id: string;
-  name: string;
-};
 
 type CadastroFormData = {
   curso: string;
   nome: string;
   email: string;
-  senha: string;
+  password: string;
   quem_sou: string;
 };
 
 const updateFormSchema = yup.object().shape({
-  quem_sou: yup.string().required("Selecione uma opção"),
   nome: yup.string().required("Nome obrigatório"),
   email: yup.string().required("E-mail obrigatório").email("E-mail inválido"),
-  senha: yup.string().required("Senha obrigatória"),
-  campus: yup.string().required("Campus obrigatório"),
-  curso: yup.string().required("Curso obrigatório"),
+  password: yup.string().required("Password obrigatória"),
 });
 
 const Usuario = () => {
@@ -58,9 +46,7 @@ const Usuario = () => {
 
   const router = useRouter();
 
-  const [campus, setCampus] = useState<CampusResponse[]>([]);
 
-  const [courses, setCourses] = useState<CourseResponse[]>([]);
 
   const [disable, setDisable] = useState(true);
 
@@ -68,9 +54,14 @@ const Usuario = () => {
 
   const [loading, setLoading] = useState(false);
 
+
+  const [defaultUser, setDefaultUser] = useState<IUser>()
+
   useEffect(() => {
-    //console.log(user);
-  }, [user, token]);
+    
+    setDefaultUser(user)
+
+  }, []);
 
   const {
     register,
@@ -80,36 +71,11 @@ const Usuario = () => {
     resolver: yupResolver(updateFormSchema),
   });
 
-  useEffect(() => {
-    async function GetCampus() {
-      const response = await api.get<CampusResponse[]>("/campus/");
 
-      setCampus(response.data);
-      ////console.log(response);
-    }
-    GetCampus();
-  }, []);
-
-  async function GetCourse(e: any) {
-    if (!e.target.value) {
-      setDisable(true);
-      return;
-    } else {
-      setDisable(false);
-    }
-
-    const response = await api.get<CourseResponse[]>(
-      `/courses/${e.target.value}`
-    );
-    setCourses(response.data);
-
-    ////console.log(response);
-  }
   const handleUpdateUser: SubmitHandler<CadastroFormData> = async (values) => {
-    console.log(values);
-
-    const loginValue = values;
-
+ //   console.log(values);
+    const loginValue : ICredentiasUser = values
+  
     try {
       setLoading(true);
 
@@ -120,9 +86,9 @@ const Usuario = () => {
         {
           name: values.nome,
           email: values.email,
-          password: values.senha,
-          role: values.quem_sou,
-          course_id: values.curso,
+          password: values.password,
+          role: user.role,
+          course_id: user.course.id,
         },
         {
           headers: {
@@ -137,6 +103,10 @@ const Usuario = () => {
       }*/
       );
 
+      signOut()
+
+      signIn(loginValue)
+  
       toast({
         title: "Sucesso !!!",
         description: "Sucesso ao atualizar seu usuário",
@@ -147,6 +117,7 @@ const Usuario = () => {
       });
 
       window.location.reload();
+
     } catch (error: any) {
       //console.log(error.response.data);
       if (error.response) {
@@ -230,54 +201,27 @@ const Usuario = () => {
           as="form"
           onSubmit={handleSubmit(handleUpdateUser)}
         >
-          <Select
-            placeholder="Selecione um Campus:"
-            options={campus.map((campu) => ({
-              value: campu.id,
-              text: campu.name,
-            }))}
-            {...register("campus")}
-            error={errors.campus}
-            onChange={(e) => GetCourse(e)}
-          ></Select>
-          <Select
-            placeholder="Selecione um Curso:"
-            isDisabled={disable}
-            options={courses.map((course) => ({
-              value: course.id,
-              text: course.name,
-            }))}
-            {...register("curso")}
-            error={errors.curso}
-          />
+        
           <Input
+            defaultValue={defaultUser?.name}
             placeholder="Nome:"
             type="name"
             {...register("nome")}
             error={errors.nome}
           ></Input>
           <Input
+          defaultValue={defaultUser?.email}
             placeholder="Email: "
             type="email"
             {...register("email")}
             error={errors.email}
           ></Input>
           <Input
-            placeholder="Senha:"
+            placeholder="Password:"
             type="password"
-            {...register("senha")}
-            error={errors.senha}
+            {...register("password")}
+            error={errors.password}
           ></Input>
-          <Select
-            placeholder="Eu sou?"
-            options={[
-              { value: "student", text: "Aluno" },
-              { value: "professor", text: "Professor" },
-            ]}
-            {...register("quem_sou")}
-            error={errors.quem_sou}
-          />
-
           <Button
             type="submit"
             w="100%"
@@ -288,15 +232,18 @@ const Usuario = () => {
             Atualizar
           </Button>
         </Stack>
+        <Stack
+        mt={6}
+        w="100%"> 
         <Button
-          w="100%"
-          m={1}
+           w="100%"
           onClick={handleDeletUser}
           colorScheme="red"
           isLoading={loading}
         >
           Encerrar a minha conta
         </Button>
+        </Stack>
       </SidebarWithHeader>
     </>
   );
