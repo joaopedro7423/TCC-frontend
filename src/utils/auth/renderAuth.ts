@@ -6,7 +6,6 @@ import {
 import { destroyCookie, parseCookies } from "nookies";
 
 type withSSRAuthenticatedOptions = {
-  permissions?: string[];
   roles?: string[];
 };
 
@@ -19,7 +18,17 @@ export function withSSRAuthenticated<P>(
   ): Promise<GetServerSidePropsResult<P>> => {
     const cookies = parseCookies(ctx);
 
-    const token = cookies["TccToken"];
+    let token, user;
+  
+    const ctxUrl = ctx.resolvedUrl.split("/")[1]
+   // console.log(ctxUrl)
+
+    if (cookies.TccToken) {
+      const parsedCookie = JSON.parse(cookies.TccToken);
+      token = parsedCookie.token;
+      user = parsedCookie.user;
+    }
+    //console.log(token)
 
     if (!token) {
       return {
@@ -30,10 +39,23 @@ export function withSSRAuthenticated<P>(
       };
     }
 
+    const userHasPermission = options?.roles?.includes(user.role);
+    //  console.log(user.role)
+    if (options) {
+      if (userHasPermission && !(user.role == ctxUrl) || !userHasPermission ) {
+        return {
+          redirect: {
+            destination: `/${user.role}`,
+            permanent: false,
+          },
+        };
+      }
+    }
+
     try {
       return await fn(ctx);
     } catch (error) {
-      destroyCookie(ctx, "TccToken");
+       destroyCookie(ctx, "TccToken");
 
       return {
         redirect: {

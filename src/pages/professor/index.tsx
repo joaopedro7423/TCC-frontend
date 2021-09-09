@@ -21,12 +21,12 @@ const Professor = () => {
   const { handleSubmit } = useForm();
 
   //verificando pelo client
-  useEffect(() => {
+ /* useEffect(() => {
     if (!user || user.role != "professor") {
       router.push("/");
     }
   }, []);
-
+*/
   const handleLogout = async () => {
     //console.log(values);
 
@@ -77,7 +77,7 @@ const Professor = () => {
           >
             <Box>
               <Heading as="h2" color="balck" mb={2}>
-                Seja bem vindo!
+                Seja bem vindo! professor:
               </Heading>
               <Heading color="balck" mb={6}>
                 {user?.name}
@@ -96,7 +96,7 @@ export const getServerSideProps = withSSRAuthenticated(async (ctx) => {
   return {
     props: {},
   };
-});
+},{roles:["professor"]});
 
 /*
 function Component() {

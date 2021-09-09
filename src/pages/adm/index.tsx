@@ -21,12 +21,13 @@ const Adm = () => {
   const { handleSubmit } = useForm();
 
   //verificando pelo client
+  /*
   useEffect(() => {
     if (!user || user.role != "adm") {
       router.push("/");
     }
   }, []);
-
+*/
   const handleLogout = async () => {
     //console.log(values);
 
@@ -77,7 +78,7 @@ const Adm = () => {
           >
             <Box>
               <Heading as="h2" color="balck" mb={2}>
-                Seja bem vindo!
+                Seja bem vindo! adm:
               </Heading>
               <Heading color="balck" mb={6}>
                 {user?.name}
@@ -96,7 +97,7 @@ export const getServerSideProps = withSSRAuthenticated(async (ctx) => {
   return {
     props: {},
   };
-});
+},{roles:["adm"]});
 
 /*
 function Component() {

@@ -13,7 +13,7 @@ export function withSSRGuest<P>(fn: GetServerSideProps<P>): GetServerSideProps {
     if (cookies["TccToken"]) {
       const { token, user } = JSON.parse(cookies.TccToken);
 
-      console.log(user);
+     // console.log(ctx.req.url);
       if (user.role == "adm") {
         return {
           redirect: {

@@ -5,18 +5,18 @@ import { createContext } from "react";
 import ICredentiasUser from "interfaces/credentialsUsers";
 import { api } from "services/api";
 import { destroyCookie, parseCookies, setCookie } from "nookies";
+import { useToast } from "@chakra-ui/toast";
+import { useRouter } from "next/router";
 
-
-export interface ICampus{
-  id:string;
+export interface ICampus {
+  id: string;
   name: string;
- 
 }
 
-export interface ICourse{
-  id:string;
+export interface ICourse {
+  id: string;
   name: string;
-  campus: ICampus
+  campus: ICampus;
 }
 
 export interface IUser {
@@ -46,6 +46,9 @@ export const AuthContext = createContext<IAuthContextState>(
 );
 
 export const AuthProvider: React.FC = ({ children }) => {
+  const toast = useToast();
+  const router = useRouter();
+
   const [data, setData] = useState<IAuthState>(() => {
     const cookies = parseCookies();
 
@@ -54,7 +57,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
       //a condição é que os 2 tem que existir
       if (token && user) {
-        console.log(user)
+        //console.log(user)
         return { token, user };
       }
     }
@@ -67,9 +70,9 @@ export const AuthProvider: React.FC = ({ children }) => {
     const response = await api.post("/sessions", credentials);
     // //console.log(response)
     const { token, user } = response.data;
-
+    
     const payload = { token, user };
-
+    
     await setCookie(null, "TccToken", JSON.stringify(payload), {
       maxAge: 24 * 60 * 60,
       path: "/",
@@ -79,6 +82,12 @@ export const AuthProvider: React.FC = ({ children }) => {
       token,
       user,
     });
+
+
+    router.push(`/${user.role}`);
+
+    
+
   }, []);
 
   const signOut = useCallback(() => {

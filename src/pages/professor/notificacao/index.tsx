@@ -22,12 +22,7 @@ const Notificacao = () => {
   const { handleSubmit } = useForm();
 
   //verificando pelo client
-  useEffect(() => {
-    if (!user || user.role != "professor") {
-      router.push("/");
-    }
-  }, []);
-
+  
   const handleLogout = async () => {
     //console.log(values);
 
@@ -78,7 +73,7 @@ export const getServerSideProps = withSSRAuthenticated(async (ctx) => {
   return {
     props: {},
   };
-});
+},{roles:["professor"]});
 
 /*
 function Component() {

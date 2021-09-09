@@ -1,13 +1,4 @@
-import {
-  Box,
-  Flex,
-  Heading,
-  useToast,
-  Button,
-  Link,
-  Stack,
-  Icon,
-} from "@chakra-ui/react";
+import { useToast, Button, Stack } from "@chakra-ui/react";
 
 import { useContext, useEffect, useState } from "react";
 
@@ -20,12 +11,9 @@ import * as yup from "yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { Select } from "components/shared/Select";
 import { Input } from "components/shared/Input";
 import { api } from "services/api";
-import { withSSRGuest } from "utils/auth/redirectAuth";
 import ICredentiasUser from "interfaces/credentialsUsers";
-
 
 type CadastroFormData = {
   curso: string;
@@ -46,21 +34,16 @@ const Usuario = () => {
 
   const router = useRouter();
 
-
-
   const [disable, setDisable] = useState(true);
 
   const { user, token, signIn, signOut } = useContext(AuthContext); //esssa disgraça vira um hook kkkk
 
   const [loading, setLoading] = useState(false);
 
-
-  const [defaultUser, setDefaultUser] = useState<IUser>()
+  const [defaultUser, setDefaultUser] = useState<IUser>();
 
   useEffect(() => {
-    
-    setDefaultUser(user)
-
+    setDefaultUser(user);
   }, []);
 
   const {
@@ -71,11 +54,10 @@ const Usuario = () => {
     resolver: yupResolver(updateFormSchema),
   });
 
-
   const handleUpdateUser: SubmitHandler<CadastroFormData> = async (values) => {
- //   console.log(values);
-    const loginValue : ICredentiasUser = values
-  
+    //   console.log(values);
+    const loginValue: ICredentiasUser = values;
+
     try {
       setLoading(true);
 
@@ -103,10 +85,10 @@ const Usuario = () => {
       }*/
       );
 
-      signOut()
+      signOut();
 
-      signIn(loginValue)
-  
+      await signIn(loginValue);
+
       toast({
         title: "Sucesso !!!",
         description: "Sucesso ao atualizar seu usuário",
@@ -115,8 +97,6 @@ const Usuario = () => {
         isClosable: true,
         position: "top-right",
       });
-
-      window.location.reload();
 
     } catch (error: any) {
       //console.log(error.response.data);
@@ -201,7 +181,6 @@ const Usuario = () => {
           as="form"
           onSubmit={handleSubmit(handleUpdateUser)}
         >
-        
           <Input
             defaultValue={defaultUser?.name}
             placeholder="Nome:"
@@ -210,7 +189,7 @@ const Usuario = () => {
             error={errors.nome}
           ></Input>
           <Input
-          defaultValue={defaultUser?.email}
+            defaultValue={defaultUser?.email}
             placeholder="Email: "
             type="email"
             {...register("email")}
@@ -232,17 +211,15 @@ const Usuario = () => {
             Atualizar
           </Button>
         </Stack>
-        <Stack
-        mt={6}
-        w="100%"> 
-        <Button
-           w="100%"
-          onClick={handleDeletUser}
-          colorScheme="red"
-          isLoading={loading}
-        >
-          Encerrar a minha conta
-        </Button>
+        <Stack mt={6} w="100%">
+          <Button
+            w="100%"
+            onClick={handleDeletUser}
+            colorScheme="red"
+            isLoading={loading}
+          >
+            Encerrar a minha conta
+          </Button>
         </Stack>
       </SidebarWithHeader>
     </>

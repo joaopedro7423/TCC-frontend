@@ -33,14 +33,16 @@ const Home = () => {
   const formBackground = useColorModeValue("#636363", "#C0BABC");
 
   const toast = useToast();
-  const router = useRouter();
 
   const { token, user, signIn } = useAuth(); //esssa disgraça vira um hook kkkk
 
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    //console.log(user);
+    if (user) {
+      console.log('updated:', new Date().getMilliseconds())
+      // router.push(`/${user.role}`);
+    }
     //console.log(token);
   }, [user, token]);
 
@@ -61,11 +63,14 @@ const Home = () => {
   ) => {
     //console.log(values);
 
+  
+
     try {
+     
       setLoading(true);
 
       await signIn(values);
-
+  
       toast({
         title: "Sucesso",
         description: "Você agora está logado.",
@@ -74,21 +79,10 @@ const Home = () => {
         isClosable: true,
         position: "top-right",
       });
-
-      //console.log(user)
-      router.push("/adm");
-
-      /*
-      const response = await api.post("/sessions", {
-        email: values.email,
-        password: values.senha,
-      });
-*/
-      //localStorage.setItem("token", response.data.token);
-      //    localStorage.removeItem('token')
-
-      ////console.log(response);
+  
+  
     } catch (error: any) {
+      console.log(error)
       if (error.response) {
         toast({
           title: "Erro ao autenticar a conta.",
@@ -111,7 +105,7 @@ const Home = () => {
     } finally {
       setLoading(false);
     }
-    [signIn];
+  
   };
   return (
     <Flex height="100vh" alignItems="center" justifyContent="center">
