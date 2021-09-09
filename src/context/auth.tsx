@@ -10,6 +10,7 @@ interface IUser {
   id: string;
   name: string;
   role: string;
+  email: string;
   course: string;
   created_at: Date | string;
   updated_at: Date | string;
