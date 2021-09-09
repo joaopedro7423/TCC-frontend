@@ -6,12 +6,25 @@ import ICredentiasUser from "interfaces/credentialsUsers";
 import { api } from "services/api";
 import { destroyCookie, parseCookies, setCookie } from "nookies";
 
-interface IUser {
+
+export interface ICampus{
+  id:string;
+  name: string;
+ 
+}
+
+export interface ICourse{
+  id:string;
+  name: string;
+  campus: ICampus
+}
+
+export interface IUser {
   id: string;
   name: string;
   role: string;
   email: string;
-  course: string;
+  course: ICourse;
   created_at: Date | string;
   updated_at: Date | string;
 }
@@ -41,6 +54,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
       //a condição é que os 2 tem que existir
       if (token && user) {
+        console.log(user)
         return { token, user };
       }
     }
