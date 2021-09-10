@@ -90,9 +90,12 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   }, []);
 
-  const signOut = useCallback(() => {
-    destroyCookie(null, "TccToken");
+  const signOut = useCallback(async () => {
+    await destroyCookie(null, "TccToken", {
+      path:"/"
+    });
     setData({} as IAuthState);
+    router.push("/");
   }, []);
 
   return (

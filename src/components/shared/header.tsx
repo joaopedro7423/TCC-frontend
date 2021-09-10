@@ -150,6 +150,8 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   const toast = useToast();
 
   const { user, token, signOut } = useContext(AuthContext); //esssa disgraça vira um hook kkkk
+ 
+ 
   const handleLogout = async () => {
     //console.log(values);
 
@@ -165,7 +167,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         position: "top-right",
       });
 
-      router.replace("/");
+   
 
     } catch (error) {
       toast({
