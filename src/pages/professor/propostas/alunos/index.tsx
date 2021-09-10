@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import { AuthContext } from "context/auth";
 import { withSSRAuthenticated } from "utils/auth/renderAuth";
 import SidebarWithHeader from "components/shared/header";
-import { PropostasPage } from "components/pages/professor/propostas";
+import { PropostasAlunoPage } from "components/pages/professor/propostas/alunos";
 
 const PropostasAlunos = () => {
   const toast = useToast();
@@ -61,7 +61,7 @@ const PropostasAlunos = () => {
   return (
     <>
       <SidebarWithHeader>
-        <PropostasPage />
+        <PropostasAlunoPage />
       </SidebarWithHeader>
     </>
   );
