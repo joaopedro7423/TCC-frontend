@@ -41,7 +41,7 @@ export default function AprovarProposta(proposta: IdPropostaProps) {
       //  console.log(proposta.id);
       const reponse = await api.patch(
         `/proposals/${proposta.id}`,
-        { null: null },
+        null ,
         {
           headers: {
             authorization: `Bearear ${token}`,
