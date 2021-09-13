@@ -9,6 +9,7 @@ type PropostaResponse = {
   id: string;
   title: string;
   description: string;
+  userCreate: any;
 };
 
 export function ListarPropostaAlunos() {
@@ -17,11 +18,14 @@ export function ListarPropostaAlunos() {
 
   useEffect(() => {
     async function GetPropos() {
-      const response = await api.get<PropostaResponse[]>("/proposals", {
-        headers: {
-          authorization: `Bearear ${token}`,
-        },
-      });
+      const response = await api.get<PropostaResponse[]>(
+        "/proposals/listByRoleAndCourse",
+        {
+          headers: {
+            authorization: `Bearear ${token}`,
+          },
+        }
+      );
 
       setPropos(response.data);
       console.log(response);
@@ -35,7 +39,7 @@ export function ListarPropostaAlunos() {
         <Thead>
           <Tr>
             <Th>Título:</Th>
-            <Th> Visualizar e Aceitar</Th>
+            <Th> Visualizar</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -48,6 +52,7 @@ export function ListarPropostaAlunos() {
                     id={item.id}
                     description={item.description}
                     title={item.title}
+                    userCreate={item.userCreate}
                   />
                 </Flex>
               </Td>
