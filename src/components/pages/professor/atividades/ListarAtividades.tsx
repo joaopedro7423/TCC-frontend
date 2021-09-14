@@ -24,7 +24,7 @@ export function ListarAtividades({ id_project }: ProjectProps) {
   useEffect(() => {
     async function GetAtividade() {
         console.log(id_project)
-      const response = await api.get<AtividadesResponse[]>("/activities/", {
+      const response = await api.get<AtividadesResponse[]>(`/activities/listbyproject/${id_project}`, {
         headers: {
           authorization: `Bearear ${token}`,
         },
