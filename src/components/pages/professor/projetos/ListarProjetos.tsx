@@ -57,10 +57,10 @@ export function ListarProjetos() {
               <Td>
                 <Flex>
                   <Center>
-                    <NextLink href={`/professor/projetos/${item.id}`}> 
-                    <Button  m={1} colorScheme="blue">
-                      <Icon as={IoMdLink} />
-                    </Button>
+                    <NextLink href={`/professor/projetos/${item.id}`}>
+                      <Button m={1} colorScheme="blue">
+                        <Icon as={IoMdLink} />
+                      </Button>
                     </NextLink>
                   </Center>
                 </Flex>
