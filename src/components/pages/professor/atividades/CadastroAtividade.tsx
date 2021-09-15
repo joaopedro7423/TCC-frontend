@@ -64,7 +64,7 @@ export function CadastroAtividade({ id_project }: ProjectProps) {
       );
       toast({
         title: "Sucesso !!!",
-        description: "Sucesso ao criar um novo curso",
+        description: "Sucesso ao criar a atividade",
         status: "success",
         duration: 2000,
         isClosable: true,
@@ -75,7 +75,7 @@ export function CadastroAtividade({ id_project }: ProjectProps) {
       //console.log(error.response.data);
       if (error.response) {
         toast({
-          title: "Erro ao criar um novo curso.",
+          title: "Erro ao criar a atividade.",
           description: error.response.data.message,
           status: "error",
           duration: 2000,
@@ -84,7 +84,7 @@ export function CadastroAtividade({ id_project }: ProjectProps) {
         });
       } else {
         toast({
-          title: "Erro ao criar um novo curso.",
+          title: "Erro ao criar a atividade.",
           description: "Alguma coisa aconteceu.",
           status: "error",
           duration: 2000,
@@ -108,7 +108,7 @@ export function CadastroAtividade({ id_project }: ProjectProps) {
         />
         <Textarea
           borderColor="black"
-          placeholder="Descrição da notificação:"
+          placeholder="Descrição da atividades:"
           type="name"
           {...register("description")}
           error={errors.description}
