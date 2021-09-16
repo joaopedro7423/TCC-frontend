@@ -9,12 +9,11 @@ type ProjectProps = {
   id_project: string;
 };
 
-interface ProjetoResponse  {
+interface ProjetoResponse {
   id: string;
   title: string;
   description: string;
-
-};
+}
 
 export function InformacoesProjeto({ id_project }: ProjectProps) {
   const [projeto, setProjeto] = useState<ProjetoResponse>();
@@ -40,14 +39,12 @@ export function InformacoesProjeto({ id_project }: ProjectProps) {
 
   return (
     <>
-     
-        <Stack direction={["column"]} spacing="1rem" align="stretch">
-          <Text>Título: {projeto?.title}</Text>
-          <Text>Descrição: {projeto?.description}</Text>
-            
- 
+      <Stack direction={["column"]} spacing="1rem" align="stretch">
+        <Text>Título: {projeto?.title}</Text>
+        <Text>Descrição: {projeto?.description}</Text>
+
         <DeletProjeto id={id_project} />
-        </Stack>
+      </Stack>
     </>
   );
 }
