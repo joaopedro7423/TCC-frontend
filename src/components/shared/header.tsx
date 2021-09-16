@@ -1,4 +1,4 @@
-import React, { ReactNode, useContext, useState } from "react";
+import React, { ReactNode, useContext, useEffect, useState } from "react";
 import {
   IconButton,
   Button,
@@ -25,21 +25,14 @@ import {
 } from "@chakra-ui/react";
 import { FiHome, FiMenu, FiChevronDown } from "react-icons/fi";
 import { IconType } from "react-icons";
-import { IoBookOutline } from "react-icons/io5";
 import { AuthContext } from "context/auth";
 import { ReactText } from "react";
 import router from "next/router";
 import NextLink from "next/link";
-
-interface LinkItemProps {
-  name: string;
-  icon: IconType;
-  link: string;
-}
-const LinkItems: Array<LinkItemProps> = [
-  { name: "Campus", icon: FiHome, link: "adm/campus" },
-  { name: "Cursos", icon: IoBookOutline, link: "adm/curso" },
-];
+import { admNavigation } from "navigation/adm";
+import { professorNavigation } from "navigation/professor";
+import { INavigation } from "navigation/INavigation";
+import { studentNavigation } from "navigation/student";
 
 export default function SidebarWithHeader({
   children,
@@ -47,7 +40,6 @@ export default function SidebarWithHeader({
   children: ReactNode;
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
   return (
     <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
       <SidebarContent
@@ -81,6 +73,30 @@ interface SidebarProps extends BoxProps {
 }
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+  const { user } = useContext(AuthContext);
+
+
+
+  const [LinkItems, setLinkItems] = useState([] as INavigation[]);
+  
+  useEffect (()=>{
+    console.log(user)
+
+    switch (user.role) {
+      case "professor":
+        setLinkItems(professorNavigation);
+        break;
+      case "student":
+        setLinkItems(studentNavigation);
+        break;
+      case "adm":
+        setLinkItems(admNavigation);
+        break;
+    }
+  },[])
+
+ 
+
   return (
     <Box
       transition="3s ease"
@@ -150,8 +166,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   const toast = useToast();
 
   const { user, token, signOut } = useContext(AuthContext); //esssa disgraça vira um hook kkkk
- 
- 
+
   const handleLogout = async () => {
     //console.log(values);
 
@@ -166,9 +181,6 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         isClosable: true,
         position: "top-right",
       });
-
-   
-
     } catch (error) {
       toast({
         title: "Erro ao Deslogar a conta.",
@@ -232,10 +244,8 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               bg={useColorModeValue("white", "gray.900")}
               borderColor={useColorModeValue("gray.200", "gray.700")}
             >
-              <NextLink href='/usuario'> 
-              <MenuItem>
-                Editar
-              </MenuItem>
+              <NextLink href="/usuario">
+                <MenuItem>Editar</MenuItem>
               </NextLink>
               <MenuDivider />
               <MenuItem onClick={handleLogout}>
