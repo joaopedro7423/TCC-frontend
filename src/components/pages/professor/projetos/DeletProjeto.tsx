@@ -33,7 +33,7 @@ export default function DeletProjeto(proj: IdProjetoProps) {
         isClosable: true,
         position: "top-right",
       });
-      window.location.reload();
+      router.push(`/${user.role}`);
     } catch (error: any) {
       if (error.response) {
         toast({
