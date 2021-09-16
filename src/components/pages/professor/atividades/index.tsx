@@ -1,5 +1,6 @@
 import { Heading, Text } from "@chakra-ui/layout";
 import { Flex } from "@chakra-ui/react";
+import { InformacoesProjeto } from "../projetos/InformacoesProjeto";
 import { CadastroAtividade } from "./CadastroAtividade";
 import { ListarAtividades } from "./ListarAtividades";
 
@@ -10,6 +11,12 @@ type ProjectProps = {
 export function AtividadesPage({ id_project }: ProjectProps) {
   return (
     <>
+      <Heading size="lg"> Informações do projeto:</Heading>
+      <Flex p={3} mb={6}>
+        <InformacoesProjeto id_project={id_project} />
+      </Flex>
+
+
       <Heading size="lg"> Cadastro de Atividade:</Heading>
       <Flex p={3} mb={6}>
         <CadastroAtividade id_project={id_project} />
