@@ -57,7 +57,7 @@ export function ListarProjetos() {
               <Td>
                 <Flex>
                   <Center>
-                    <NextLink href={`/professor/projetos/${item.id}`}>
+                    <NextLink href={`/${user.role}/projetos/${item.id}`}>
                       <Button m={1} colorScheme="blue">
                         <Icon as={IoMdLink} />
                       </Button>
