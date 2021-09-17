@@ -1,10 +1,10 @@
 import { INavigation } from "./INavigation";
-import { FiHome } from "react-icons/fi";
-import { IoBookOutline } from "react-icons/io5";
+import { HiOutlineUser, HiOutlineUsers } from "react-icons/hi";
+import {AiOutlineNotification, AiOutlineAudit} from "react-icons/ai";
 
 export const professorNavigation: INavigation[] = [
-    { name: "Campus", icon: FiHome, link: "adm/campus" },
-    { name: "asuihfu", icon: IoBookOutline, link: "adm/curso" },
-    { name: "askd", icon: IoBookOutline, link: "adm/curso" },
-    { name: "Teste3", icon: IoBookOutline, link: "adm/curso" },
+    { name: "Minhas Propostas", icon: HiOutlineUser, link: "propostas" },
+    { name: "Propostas dos Alunos", icon: HiOutlineUsers, link: "propostas/alunos" },
+    { name: "Projetos", icon: AiOutlineAudit, link: "projetos" },
+    { name: "Notificação", icon: AiOutlineNotification, link: "notificacao" },
 ]
