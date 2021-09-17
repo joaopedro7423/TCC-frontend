@@ -80,7 +80,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   const [LinkItems, setLinkItems] = useState([] as INavigation[]);
   
   useEffect (()=>{
-    console.log(user)
+    //console.log(user)
 
     switch (user.role) {
       case "professor":
@@ -112,7 +112,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
-        <NextLink href={link.link}>
+        <NextLink href={`/${user.role}/${link.link}`}>
           <NavItem key={link.name} icon={link.icon}>
             {link.name}
           </NavItem>
@@ -128,7 +128,7 @@ interface NavItemProps extends FlexProps {
 }
 const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
   return (
-    <Link href="#" style={{ textDecoration: "none" }}>
+    <Link  style={{ textDecoration: "none" }}>
       <Flex
         align="center"
         p="4"
