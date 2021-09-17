@@ -36,7 +36,7 @@ export function ListarProjetos() {
       });
 
       setPropos(response.data);
-      console.log(response);
+      //console.log(response);
     }
     GetPropos();
   }, []);

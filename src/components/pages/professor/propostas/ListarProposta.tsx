@@ -27,7 +27,7 @@ export function ListarProposta() {
       });
 
       setPropos(response.data);
-      console.log(response);
+      //console.log(response);
     }
     GetPropos();
   }, [DeletNotifi, EditarNotifi]);

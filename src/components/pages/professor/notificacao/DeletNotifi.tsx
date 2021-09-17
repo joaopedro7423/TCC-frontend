@@ -24,7 +24,7 @@ export default function DeletNotifi(notifi: IdNotifiProps) {
           authorization: `Bearear ${token}`,
         },
       });
-      console.log(reponse.data);
+      //console.log(reponse.data);
       toast({
         title: "Sucesso",
         description: "Você deletou um notificação!!",

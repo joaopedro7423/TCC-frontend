@@ -28,7 +28,7 @@ export function ListarPropostaAlunos() {
       );
 
       setPropos(response.data);
-      console.log(response);
+     // console.log(response);
     }
     GetPropos();
   }, []);

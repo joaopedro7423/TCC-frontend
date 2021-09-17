@@ -54,7 +54,7 @@ export default function EditarCursos(cursos: IdCursosProps) {
 
     try {
       setLoading(true);
-      console.log(cursos.campus_id);
+    //  console.log(cursos.campus_id);
       const reponse = await api.put(
         `/courses/${cursos.id}`,
         {

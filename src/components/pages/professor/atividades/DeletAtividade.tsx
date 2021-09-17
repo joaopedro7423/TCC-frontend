@@ -24,7 +24,7 @@ export default function DeletAtividade(ativi: IdAtiviProps) {
           authorization: `Bearear ${token}`,
         },
       });
-      console.log(reponse.data);
+     // console.log(reponse.data);
       toast({
         title: "Sucesso",
         description: "Você deletou uma atividade!!",
