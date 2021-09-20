@@ -8,8 +8,8 @@ import { useRouter } from "next/router";
 import { AuthContext } from "context/auth";
 import { withSSRAuthenticated } from "utils/auth/renderAuth";
 import SidebarWithHeader from "components/shared/header";
-import { AtividadesPage } from "components/pages/professor/atividades";
 import { GetServerSideProps } from "next";
+import { AtividadesPage } from "components/pages/student/atividades";
 
 type ProjectIdProps = {
   id_project: string;
