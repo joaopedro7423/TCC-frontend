@@ -40,13 +40,13 @@ export function ListarAtividades({ id_project }: ProjectProps) {
 
   return (
     <>
-      <SimpleGrid columns={[1, 2, 1, 2]}>
+      <SimpleGrid columns={[1, 2, 1, 3]}>
         {atividade.map(function (data) {
           const { id, title, description, status } = data;
           return (
             <CardAtividade
               key={id}
-              id={id}
+              id_atividade={id}
               title={title}
               description={description}
               status={status}
