@@ -35,6 +35,10 @@ export function CardAtividade(props: any) {
 
   function FormatStatusName(status: any) {
     switch (status) {
+        case "NEW":
+            setCollor("whiteAlpha");
+            setStatusName("Novo");
+            break;
       case "CANCELED":
         setCollor("red.100");
         setStatusName("Cancelado");
@@ -80,20 +84,21 @@ export function CardAtividade(props: any) {
     <>
       <Box
         p={4}
-        borderRadius={"md"}
+        borderRadius={"lg"}
         display={{ md: "flex" }}
         maxWidth="32rem"
         maxHeight="32rem"
         borderWidth={1}
         margin={2}
         bgColor={collor}
+        transition = "1s ease"
       >
         <Stack
           w="100%"
           align={{ base: "center", md: "stretch" }}
           textAlign={{ base: "center" }}
           mt={{ base: 4, md: 0 }}
-          ml={{ md: 6 }}
+         //ml={{ md: 6 }}
           justifyContent="space-between"
           alignItems="center"
         >
@@ -107,7 +112,7 @@ export function CardAtividade(props: any) {
               {title}
             </Text>
 
-            <Text my={2} color="gray.500">
+            <Text my={2} color="gray.600">
               {description}
             </Text>
           </Box>
