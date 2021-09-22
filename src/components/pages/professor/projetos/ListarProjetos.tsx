@@ -24,7 +24,7 @@ type ProjetosResponse = {
 };
 
 export function ListarProjetos() {
-  const [notificacao, setPropos] = useState<ProjetosResponse[]>([]);
+  const [projetos, setProjetos] = useState<ProjetosResponse[]>([]);
   const { token, user } = useAuth();
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export function ListarProjetos() {
         },
       });
 
-      setPropos(response.data);
+      setProjetos(response.data);
       //console.log(response);
     }
     GetPropos();
@@ -51,7 +51,7 @@ export function ListarProjetos() {
           </Tr>
         </Thead>
         <Tbody>
-          {notificacao.map((item, index) => (
+          {projetos.map((item, index) => (
             <Tr key={index}>
               <Td>{item.title}</Td>
               <Td>
