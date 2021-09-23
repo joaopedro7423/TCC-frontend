@@ -32,7 +32,6 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
 
   type NotificationResponse = {
     id: string;
-    title: string;
     description: string;
   };
 
@@ -107,7 +106,7 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             borderRadius={12}
             p={3}
             bg="gray.100"
-            h="60%"
+            h="69%"
           >
             <Text
               mb={3}
@@ -121,7 +120,11 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
 
             <VStack overflow="scroll" overflowX="hidden" spacing={5}>
               {notifi.map((item, index) => (
-                <NotificationsCard />
+                <NotificationsCard
+                  key={index}
+                  id={item.id}
+                  description={item.description}
+                />
               ))}
             </VStack>
           </Flex>
