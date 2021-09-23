@@ -11,7 +11,6 @@ import {
 } from "@chakra-ui/react";
 import { api } from "services/api";
 import { AuthContext } from "context/auth";
-import NextLink from "next/link";
 import { admNavigation } from "navigation/adm";
 import { professorNavigation } from "navigation/professor";
 import { INavigation } from "navigation/INavigation";
@@ -37,16 +36,20 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
 
   useEffect(() => {
     //console.log(user)
-
     async function GetPropos() {
-      const response = await api.get<NotificationResponse[]>("/notifications", {
-        headers: {
-          authorization: `Bearear ${token}`,
-        },
-      });
+      if (user.role == "student") {
+        const response = await api.get<NotificationResponse[]>(
+          "/notifications",
+          {
+            headers: {
+              authorization: `Bearear ${token}`,
+            },
+          }
+        );
 
-      setNotifi(response.data);
-      //console.log(response);
+        setNotifi(response.data);
+        //console.log(response);
+      }
     }
     GetPropos();
 
@@ -89,12 +92,15 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         </Flex>
 
         <Box pb={12} flex="4">
-          {LinkItems.map((link) => (
-            <NextLink href={`/${user?.role}/${link.link}`}>
-              <NavItem key={link.name} icon={link.icon}>
-                {link.name}
-              </NavItem>
-            </NextLink>
+          {LinkItems.map((link, index) => (
+            <NavItem
+              key={index}
+              icon={link.icon}
+              role={user?.role}
+              link={link.link}
+            >
+              {link.name}
+            </NavItem>
           ))}
         </Box>
 
