@@ -1,14 +1,17 @@
 import { Text, Box } from "@chakra-ui/react";
 
+interface INotifi {
+  id: string;
+  description: string;
+}
 
-export default function NotificationsCard() {
+export default function NotificationsCard({ id, description }: INotifi) {
   return (
     <>
-      <Box w="96%" borderRadius="lg" p={4} bgColor="white">
-        <Text fontWeight="bold" textTransform="uppercase" fontSize="lg">
-          Titulo
+      <Box maxW="96%" borderRadius="lg" p={4} bgColor="white">
+        <Text fontWeight="semibold" textTransform="uppercase" fontSize="sm">
+          {description}
         </Text>
-        <Text>Description jkasd sajkdn kasdm</Text>
       </Box>
     </>
   );
