@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import { AuthContext } from "context/auth";
 import { withSSRAuthenticated } from "utils/auth/renderAuth";
 import SidebarWithHeader from "components/shared/header";
-import { PropostasAlunoPage } from "components/pages/professor/propostas/alunos";
+import { PropostasProfessorPage } from "components/pages/student/professor";
 
 const PropostasAlunos = () => {
   const toast = useToast();
@@ -22,7 +22,7 @@ const PropostasAlunos = () => {
   const { handleSubmit } = useForm();
 
   //verificando pelo client
-  
+
   const handleLogout = async () => {
     //console.log(values);
 
@@ -56,12 +56,10 @@ const PropostasAlunos = () => {
     [];
   };
 
-  //console.log(user.role)
-
   return (
     <>
       <SidebarWithHeader>
-        <PropostasAlunoPage />
+        <PropostasProfessorPage />
       </SidebarWithHeader>
     </>
   );
@@ -69,29 +67,11 @@ const PropostasAlunos = () => {
 export default PropostasAlunos;
 
 //verificando pelo server
-export const getServerSideProps = withSSRAuthenticated(async (ctx) => {
-  return {
-    props: {},
-  };
-},{roles:["student"]});
-
-/*
-function Component() {
-
-    const userCanSeeButton = useCan("student")
-
-    return (
-        <>
-
-        <Can permission="adm">
-            <Text>Só adm pode ver</Text>
-            <Button>Adm</Button>
-        </Can>
-
-      {userCanSeeButton &&  <Button>Enviar Atividade</Button>}
-      </>
-    )
-}
-issoé do repositorio do git do lucas uma função do components que da a permissão de acesso a sua escolha
-e fazer o hook do can
-*/
+export const getServerSideProps = withSSRAuthenticated(
+  async (ctx) => {
+    return {
+      props: {},
+    };
+  },
+  { roles: ["student"] }
+);
