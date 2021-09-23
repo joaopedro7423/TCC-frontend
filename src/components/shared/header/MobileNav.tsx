@@ -111,7 +111,7 @@ export const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                 <MenuItem>Editar</MenuItem>
               </NextLink>
               <MenuDivider />
-              <MenuItem onClick={handleLogout}>
+              <MenuItem as={Box} onClick={handleLogout}>
                 {" "}
                 <Button
                   type="submit"
