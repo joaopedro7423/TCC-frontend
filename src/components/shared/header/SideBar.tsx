@@ -28,6 +28,7 @@ import { VscSettingsGear } from "react-icons/vsc";
 interface SidebarProps extends BoxProps {
   onClose: () => void;
 }
+let cargo: {} | null | undefined;
 
 export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   const { user, token, signOut } = useContext(AuthContext);
@@ -91,12 +92,15 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
     switch (user.role) {
       case "professor":
         setLinkItems(professorNavigation);
+        cargo = "Professor";
         break;
       case "student":
         setLinkItems(studentNavigation);
+        cargo = "Estudante";
         break;
       case "adm":
         setLinkItems(admNavigation);
+        cargo = "Adiministrador";
         break;
     }
   }, []);
@@ -115,12 +119,18 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         h="100vh"
         {...rest}
       >
-        <Box py={6} fontWeight="bold">
+        <Box py={6}>
           <Center>
-            <Text>{user?.course.name} </Text>
+            <Text fontWeight="bold">{user?.course.name} </Text>
           </Center>
           <Center>
-            <Text>{user?.course.campus.name}</Text>
+            <Text fontWeight="bold">{user?.course.campus.name}</Text>
+          </Center>
+          <Center>
+            <Text>Nome: {user?.name}</Text>
+          </Center>{" "}
+          <Center>
+            <Text>Cargo: {cargo}</Text>
           </Center>
         </Box>
         <Divider />
