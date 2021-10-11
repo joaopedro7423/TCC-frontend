@@ -8,6 +8,9 @@ import {
   Text,
   Center,
   VStack,
+  Heading,
+  Divider,
+  Spacer,
 } from "@chakra-ui/react";
 import { api } from "services/api";
 import { AuthContext } from "context/auth";
@@ -17,7 +20,7 @@ import { professorNavigation } from "navigation/professor";
 import { INavigation } from "navigation/INavigation";
 import { studentNavigation } from "navigation/student";
 import { NavItem } from "./NavItens";
-import NotificationsCard from "./NotificationsCard";
+import NotificationSpace from "./NotificationSpace";
 
 interface SidebarProps extends BoxProps {
   onClose: () => void;
@@ -78,6 +81,16 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         h="100vh"
         {...rest}
       >
+        <Box py={6} fontWeight="bold">
+          <Center>
+            <Text>{user?.course.name} </Text>
+          </Center>
+          <Center>
+            <Text>{user?.course.campus.name}</Text>
+          </Center>
+        </Box>
+        <Divider />
+        <Spacer />
         <Flex
           h="20"
           alignItems="center"
@@ -88,7 +101,18 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
           <CloseButton onClick={onClose} />
         </Flex>
 
-        <Box pb={12} flex="4">
+        <Box py={8} flex="4">
+          {LinkItems.map((link) => (
+            <NextLink href={`/${user?.role}/${link.link}`}>
+              <NavItem key={link.name} icon={link.icon}>
+                {link.name}
+              </NavItem>
+            </NextLink>
+          ))}
+        </Box>
+        <Spacer />
+
+        <Box py={8} flex="4">
           {LinkItems.map((link) => (
             <NextLink href={`/${user?.role}/${link.link}`}>
               <NavItem key={link.name} icon={link.icon}>
@@ -98,37 +122,7 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
           ))}
         </Box>
 
-        {user?.role == "student" && (
-          <Flex
-            flex="1"
-            flexDir="column"
-            alignItems="center"
-            borderRadius={12}
-            p={3}
-            bg="gray.100"
-            h="69%"
-          >
-            <Text
-              mb={3}
-              textAlign="center"
-              fontWeight="bold"
-              textTransform="uppercase"
-              fontSize="md"
-            >
-              Notificações:
-            </Text>
-
-            <VStack overflow="scroll" overflowX="hidden" spacing={5}>
-              {notifi.map((item, index) => (
-                <NotificationsCard
-                  key={index}
-                  id={item.id}
-                  description={item.description}
-                />
-              ))}
-            </VStack>
-          </Flex>
-        )}
+        {user?.role == "student" && <NotificationSpace />}
       </Box>
     </>
   );
