@@ -1,10 +1,22 @@
-import { Flex, Table, Thead, Tr, Th, Tbody, Td } from "@chakra-ui/react";
+import {
+  Flex,
+  Table,
+  Thead,
+  Tr,
+  Th,
+  Tbody,
+  Td,
+  Box,
+  Text,
+  HStack,
+} from "@chakra-ui/react";
 
 import { api } from "services/api";
 import { useEffect, useState } from "react";
 import useAuth from "hooks/auth";
 import EditarNotifi from "./EditarNotifi";
 import DeletNotifi from "./DeletNotifi";
+import { BoxShadown } from "components/shared/Box";
 
 type NotificacaoResponse = {
   id: string;
@@ -31,7 +43,19 @@ export function ListarNotifi() {
 
   return (
     <>
-      <Table w="100%" variant="simple">
+      {/* <Box w="100%">
+        {" "}
+        {notificacao.map((item, index) => (
+          <HStack border="1px" borderColor="gray.200" my={3}>
+            <Text noOfLines={1}>{item.description}</Text>
+
+            <EditarNotifi id={item.id} description={item.description} />
+            <DeletNotifi id={item.id} />
+          </HStack>
+        ))}
+      </Box> */}
+
+      <Table w="100%" variant="unstyled" border="none">
         <Thead>
           <Tr>
             <Th>Nome:</Th>
@@ -40,7 +64,12 @@ export function ListarNotifi() {
         </Thead>
         <Tbody>
           {notificacao.map((item, index) => (
-            <Tr key={index}>
+            <Tr
+              key={index}
+              _hover={{
+                bg: "gray.100",
+              }}
+            >
               <Td noOfLines={1}>{item.description}</Td>
               <Td>
                 <Flex>

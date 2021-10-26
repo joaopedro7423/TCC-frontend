@@ -40,7 +40,7 @@ const Home = () => {
 
   useEffect(() => {
     if (user) {
-      console.log('updated:', new Date().getMilliseconds())
+      console.log("updated:", new Date().getMilliseconds());
       // router.push(`/${user.role}`);
     }
     //console.log(token);
@@ -63,14 +63,11 @@ const Home = () => {
   ) => {
     //console.log(values);
 
-  
-
     try {
-     
       setLoading(true);
 
       await signIn(values);
-  
+
       toast({
         title: "Sucesso",
         description: "Você agora está logado.",
@@ -79,10 +76,8 @@ const Home = () => {
         isClosable: true,
         position: "top-right",
       });
-  
-  
     } catch (error: any) {
-      console.log(error)
+      console.log(error);
       if (error.response) {
         toast({
           title: "Erro ao autenticar a conta.",
@@ -105,7 +100,6 @@ const Home = () => {
     } finally {
       setLoading(false);
     }
-  
   };
   return (
     <Flex height="100vh" alignItems="center" justifyContent="center">

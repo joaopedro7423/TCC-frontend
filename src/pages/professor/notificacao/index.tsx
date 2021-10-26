@@ -9,6 +9,7 @@ import { AuthContext } from "context/auth";
 import { withSSRAuthenticated } from "utils/auth/renderAuth";
 import SidebarWithHeader from "components/shared/header";
 import { NotificacaoPage } from "components/pages/professor/notificacao";
+import { SimpleGrid, Box } from "@chakra-ui/react";
 
 const Notificacao = () => {
   const toast = useToast();
@@ -22,7 +23,7 @@ const Notificacao = () => {
   const { handleSubmit } = useForm();
 
   //verificando pelo client
-  
+
   const handleLogout = async () => {
     //console.log(values);
 
@@ -69,29 +70,11 @@ const Notificacao = () => {
 export default Notificacao;
 
 //verificando pelo server
-export const getServerSideProps = withSSRAuthenticated(async (ctx) => {
-  return {
-    props: {},
-  };
-},{roles:["professor"]});
-
-/*
-function Component() {
-
-    const userCanSeeButton = useCan("student")
-
-    return (
-        <>
-
-        <Can permission="adm">
-            <Text>Só adm pode ver</Text>
-            <Button>Adm</Button>
-        </Can>
-
-      {userCanSeeButton &&  <Button>Enviar Atividade</Button>}
-      </>
-    )
-}
-issoé do repositorio do git do lucas uma função do components que da a permissão de acesso a sua escolha
-e fazer o hook do can
-*/
+export const getServerSideProps = withSSRAuthenticated(
+  async (ctx) => {
+    return {
+      props: {},
+    };
+  },
+  { roles: ["professor"] }
+);
