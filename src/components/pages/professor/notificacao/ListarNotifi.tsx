@@ -59,7 +59,7 @@ export function ListarNotifi() {
         <Thead>
           <Tr>
             <Th>Nome:</Th>
-            <Th>Editar/Excluir</Th>
+            <Th isNumeric>Editar/Excluir</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -72,7 +72,7 @@ export function ListarNotifi() {
             >
               <Td noOfLines={1}>{item.description}</Td>
               <Td>
-                <Flex>
+                <Flex justifyContent='flex-end'>
                   <EditarNotifi id={item.id} description={item.description} />
                   <DeletNotifi id={item.id} />
                 </Flex>
