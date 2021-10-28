@@ -13,7 +13,7 @@ export function BoxShadown({ children, ...rest }: ContentProps) {
         p={3}
         backgroundColor="white"
         borderRadius={15}
-        boxShadow="dark-lg"
+        boxShadow="lg"
       >
         {children}
       </Box>
