@@ -15,6 +15,8 @@ const statusChenge = yup.object().shape({
 export function CardAtividade(props: any) {
   const { id_atividade, title, description, status } = props;
 
+  // console.log(status)
+
   const { token } = useAuth();
 
   const [collor, setCollor] = useState("");
@@ -26,6 +28,9 @@ export function CardAtividade(props: any) {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(statusChenge),
+    defaultValues: {
+      status: status,
+    },
   });
 
   useEffect(() => {
@@ -35,27 +40,24 @@ export function CardAtividade(props: any) {
 
   function FormatStatusName(status: any) {
     switch (status) {
-        case "NEW":
-            setCollor("whiteAlpha");
-            setStatusName("Novo");
-            break;
+      case "NEW":
+        setCollor("white");
+
+        break;
       case "CANCELED":
         setCollor("red.100");
-        setStatusName("Cancelado");
+
         break;
       case "FINISHED":
         setCollor("whatsapp.100");
-        setStatusName("Finalizado");
 
         break;
       case "PAUSE":
         setCollor("blue.100");
-        setStatusName("Parado");
 
         break;
       case "IN_PROGRESS":
         setCollor("yellow.100");
-        setStatusName("Em Progresso");
 
         break;
     }
@@ -91,14 +93,14 @@ export function CardAtividade(props: any) {
         borderWidth={1}
         margin={2}
         bgColor={collor}
-        transition = "1s ease"
+        transition="1s ease"
       >
         <Stack
           w="100%"
           align={{ base: "center", md: "stretch" }}
           textAlign={{ base: "center" }}
           mt={{ base: 4, md: 0 }}
-         //ml={{ md: 6 }}
+          //ml={{ md: 6 }}
           justifyContent="space-between"
           alignItems="center"
         >
@@ -121,12 +123,16 @@ export function CardAtividade(props: any) {
               {...register("status")}
               error={errors.status}
               onChange={(e) => ChengeStatus(e)}
-              defaultValue={status}
               options={[
-                { value: "IN_PROGRESS", text: "Em Progresso" }, //amarelo
-                { value: "PAUSE", text: "Parado" }, //azul
-                { value: "FINISHED", text: "Finalizado" }, // verde
-                { value: "CANCELED", text: "Cancelado" }, // vermelho
+                { value: "NEW", text: "Novo", isDisabled: true },
+                {
+                  value: "IN_PROGRESS",
+                  text: "Em Progresso",
+                  isDisabled: false,
+                }, //amarelo
+                { value: "PAUSE", text: "Parado", isDisabled: false }, //azul
+                { value: "FINISHED", text: "Finalizado", isDisabled: false }, // verde
+                { value: "CANCELED", text: "Cancelado", isDisabled: false }, // vermelho
               ]}
             />
           </Box>

@@ -16,7 +16,6 @@ import {
 } from "@chakra-ui/react";
 import { api } from "services/api";
 import { AuthContext } from "context/auth";
-import NextLink from "next/link";
 import { admNavigation } from "navigation/adm";
 import { professorNavigation } from "navigation/professor";
 import { INavigation } from "navigation/INavigation";
@@ -24,6 +23,7 @@ import { studentNavigation } from "navigation/student";
 import { NavItem } from "./NavItens";
 import NotificationSpace from "./NotificationSpace";
 import { VscSettingsGear } from "react-icons/vsc";
+import NextLink from "next/link";
 
 interface SidebarProps extends BoxProps {
   onClose: () => void;
@@ -76,16 +76,20 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
 
   useEffect(() => {
     //console.log(user)
-
     async function GetPropos() {
-      const response = await api.get<NotificationResponse[]>("/notifications", {
-        headers: {
-          authorization: `Bearear ${token}`,
-        },
-      });
+      if (user.role == "student") {
+        const response = await api.get<NotificationResponse[]>(
+          "/notifications",
+          {
+            headers: {
+              authorization: `Bearear ${token}`,
+            },
+          }
+        );
 
-      setNotifi(response.data);
-      //console.log(response);
+        setNotifi(response.data);
+        //console.log(response);
+      }
     }
     GetPropos();
 
@@ -145,13 +149,16 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
           <CloseButton onClick={onClose} />
         </Flex>
 
-        <Box py={8}>
-          {LinkItems.map((link) => (
-            <NextLink href={`/${user?.role}/${link.link}`}>
-              <NavItem key={link.name} icon={link.icon}>
-                {link.name}
-              </NavItem>
-            </NextLink>
+        <Box pb={12} flex="4">
+          {LinkItems.map((link, index) => (
+            <NavItem
+              key={index}
+              icon={link.icon}
+              role={user?.role}
+              link={link.link}
+            >
+              {link.name}
+            </NavItem>
           ))}
         </Box>
 
@@ -159,9 +166,9 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
 
         <Box pb={3}>
           <Box pb={3}>
-            <NextLink href={`/usuario`}>
-              <NavItem icon={VscSettingsGear}>Editar Conta</NavItem>
-            </NextLink>
+            <NavItem icon={VscSettingsGear} link={`/usuario`} role={`${user?.role}`}>
+              Editar Conta
+            </NavItem>
           </Box>
           <Button
             px={4}

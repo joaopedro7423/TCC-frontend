@@ -182,6 +182,7 @@ export default function Cadastro() {
             options={campus.map((campu) => ({
               value: campu.id,
               text: campu.name,
+              isDisabled:false
             }))}
             {...register("campus")}
             error={errors.campus}
@@ -193,6 +194,7 @@ export default function Cadastro() {
             options={courses.map((course) => ({
               value: course.id,
               text: course.name,
+              isDisabled: false
             }))}
             {...register("curso")}
             error={errors.curso}
@@ -218,8 +220,8 @@ export default function Cadastro() {
           <Select
             placeholder="Eu sou?"
             options={[
-              { value: "student", text: "Aluno" },
-              { value: "professor", text: "Professor" },
+              { value: "student", text: "Aluno", isDisabled:false },
+              { value: "professor", text: "Professor", isDisabled:false },
             ]}
             {...register("quem_sou")}
             error={errors.quem_sou}
