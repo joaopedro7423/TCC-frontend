@@ -15,7 +15,10 @@ export function NotificacaoPage() {
       >
         <GridItem colSpan={2} mb={{ base: 5, lg: 0 }}>
           <BoxShadown>
-            <Heading size="lg"> Cadastro de Notificação:</Heading>
+            <Heading ml="7" size="lg">
+              {" "}
+              Cadastro de Notificação:
+            </Heading>
             <Flex p={3} mb={6}>
               <CadastroNotifi />
             </Flex>
@@ -25,7 +28,10 @@ export function NotificacaoPage() {
         <GridItem rowSpan={3} colSpan={4}>
           <Box>
             <BoxShadown>
-              <Heading size="lg"> Listagem de Notificação:</Heading>
+              <Heading ml="8" size="lg">
+                {" "}
+                Listagem de Notificação:
+              </Heading>
               <Flex p={3}>
                 <ListarNotifi />
               </Flex>
