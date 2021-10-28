@@ -166,9 +166,11 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
 
         <Box pb={3}>
           <Box pb={3}>
+            <NextLink href={`/usuario`}>
             <NavItem icon={VscSettingsGear} link={`/usuario`} role={`${user?.role}`}>
               Editar Conta
             </NavItem>
+            </NextLink>
           </Box>
           <Button
             px={4}
