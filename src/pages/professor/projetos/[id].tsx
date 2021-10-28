@@ -83,24 +83,3 @@ export const getServerSideProps: GetServerSideProps = withSSRAuthenticated(
   },
   { roles: ["professor"] }
 );
-
-/*
-function Component() {
-
-    const userCanSeeButton = useCan("student")
-
-    return (
-        <>
-
-        <Can permission="adm">
-            <Text>Só adm pode ver</Text>
-            <Button>Adm</Button>
-        </Can>
-
-      {userCanSeeButton &&  <Button>Enviar Atividade</Button>}
-      </>
-    )
-}
-issoé do repositorio do git do lucas uma função do components que da a permissão de acesso a sua escolha
-e fazer o hook do can
-*/
