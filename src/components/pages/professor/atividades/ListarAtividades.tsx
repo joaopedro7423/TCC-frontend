@@ -40,7 +40,6 @@ export function ListarAtividades({ id_project }: ProjectProps) {
     GetAtividade();
   }, []);
 
-
   function FormatStatusName(status: any) {
     switch (status) {
       case "NEW":
@@ -76,11 +75,18 @@ export function ListarAtividades({ id_project }: ProjectProps) {
         </Thead>
         <Tbody>
           {atividade.map((item, index) => (
-            <Tr key={index}>
+            <Tr
+              key={index}
+              _hover={{
+                bg: "gray.200",
+              }}
+            >
               <Td>{item.title}</Td>
 
               <Td>
-                <Flex justifyContent="center">{FormatStatusName(item.status)}</Flex>
+                <Flex justifyContent="center">
+                  {FormatStatusName(item.status)}
+                </Flex>
               </Td>
 
               <Td>
