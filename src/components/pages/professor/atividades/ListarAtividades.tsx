@@ -20,7 +20,6 @@ type AtividadesResponse = {
 export function ListarAtividades({ id_project }: ProjectProps) {
   const [atividade, setAtivi] = useState<AtividadesResponse[]>([]);
   const { token, user } = useAuth();
-  const [statusName, setStatusName] = useState("");
 
   useEffect(() => {
     async function GetAtividade() {
@@ -41,32 +40,22 @@ export function ListarAtividades({ id_project }: ProjectProps) {
     GetAtividade();
   }, []);
 
-  useEffect(() => {
-    atividade.map((atividade) => {
-      FormatStatusName(atividade.status);
-    });
-  }, []);
 
   function FormatStatusName(status: any) {
     switch (status) {
       case "NEW":
-        setStatusName("Novo");
-        break;
+        return "Novo";
       case "CANCELED":
-        setStatusName("Cancelado");
-        break;
+        return "Cancelado";
+
       case "FINISHED":
-        setStatusName("Finalizado");
-        break;
+        return "Finalizado";
       case "PAUSE":
-        setStatusName("Parado");
-        break;
+        return "Parado";
       case "IN_PROGRESS":
-        setStatusName("Em Progresso");
-        break;
+        return "Em Progresso";
       default:
-        setStatusName("Status não encontrado");
-        break;
+        return "Status não encontrado";
     }
   }
 
@@ -91,7 +80,7 @@ export function ListarAtividades({ id_project }: ProjectProps) {
               <Td>{item.title}</Td>
 
               <Td>
-                <Flex justifyContent="center">{statusName}</Flex>
+                <Flex justifyContent="center">{FormatStatusName(item.status)}</Flex>
               </Td>
 
               <Td>
