@@ -34,11 +34,14 @@ export function ListarProposta() {
 
   return (
     <>
-      <Table w="100%" variant="unstyled">
+      <Table variant="unstyled" border="none">
         <Thead>
           <Tr>
             <Th>Título:</Th>
-            <Flex justifyContent="flex-end">Editar/Excluir</Flex>
+            <Th>
+              {" "}
+              <Flex justifyContent="flex-end">Editar/Excluir</Flex>
+            </Th>
           </Tr>
         </Thead>
         <Tbody>
