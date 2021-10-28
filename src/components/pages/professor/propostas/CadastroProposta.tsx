@@ -88,7 +88,7 @@ export function CadastroProposta() {
 
   return (
     <>
-      <VStack spacing={7} w="100%" as="form" onSubmit={handleSubmit(handleCreateCurso)}>
+      <VStack px={5} spacing={7} w="100%" as="form" onSubmit={handleSubmit(handleCreateCurso)}>
         <Input
           placeholder="Titulo:"
           type="name"
