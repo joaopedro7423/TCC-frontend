@@ -43,19 +43,26 @@ export function ListarProjetos() {
 
   return (
     <>
-      <Table w="100%" variant="simple">
+      <Table w="100%" variant="unstyled">
         <Thead>
           <Tr>
             <Th>Título:</Th>
-            <Th>Acessar Projeto:</Th>
+            <Th>
+              <Flex justifyContent="flex-end"> Acessar Projeto:</Flex>
+            </Th>
           </Tr>
         </Thead>
         <Tbody>
           {projetos.map((item, index) => (
-            <Tr key={index}>
+            <Tr
+              key={index}
+              _hover={{
+                bg: "gray.200",
+              }}
+            >
               <Td>{item.title}</Td>
               <Td>
-                <Flex>
+                <Flex justifyContent="flex-end">
                   <Center>
                     <NextLink href={`/${user.role}/projetos/${item.id}`}>
                       <Button m={1} colorScheme="blue">
