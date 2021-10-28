@@ -24,26 +24,33 @@ export function ListarNotifi() {
       });
 
       setNotifi(response.data);
-      ////console.log(response);
+      //console.log(response);
     }
     GetCursos();
   }, [DeletNotifi, EditarNotifi]);
 
   return (
     <>
-      <Table w="100%" variant="simple">
+      <Table w="100%" variant="unstyled" border="none">
         <Thead>
           <Tr>
             <Th>Nome:</Th>
-            <Th>Editar/Excluir</Th>
+            <Th>
+              <Flex justifyContent="flex-end"> Editar/Excluir</Flex>
+            </Th>
           </Tr>
         </Thead>
         <Tbody>
           {notificacao.map((item, index) => (
-            <Tr key={index}>
+            <Tr
+              key={index}
+              _hover={{
+                bg: "gray.200",
+              }}
+            >
               <Td noOfLines={1}>{item.description}</Td>
               <Td>
-                <Flex>
+                <Flex justifyContent="flex-end">
                   <EditarNotifi id={item.id} description={item.description} />
                   <DeletNotifi id={item.id} />
                 </Flex>

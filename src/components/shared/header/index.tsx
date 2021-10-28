@@ -5,6 +5,7 @@ import {
   Drawer,
   DrawerContent,
   useDisclosure,
+  Spacer,
 } from "@chakra-ui/react";
 import { SidebarContent } from "./SideBar";
 import { MobileNav } from "./MobileNav";
@@ -19,7 +20,7 @@ export default function SidebarWithHeader({
     <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
       <SidebarContent
         onClose={() => onClose}
-        display={{ base: "none", md: "block" }}
+        display={{ base: "none", md: "flex" }}
       />
 
       <Drawer
@@ -36,7 +37,7 @@ export default function SidebarWithHeader({
         </DrawerContent>
       </Drawer>
       {/* mobilenav */}
-      <MobileNav onOpen={onOpen} />
+      <MobileNav onOpen={onOpen} display={{ base: "flex", md: "none" }} />
 
       <Box ml={{ base: 0, md: 60 }} p="4">
         {children}

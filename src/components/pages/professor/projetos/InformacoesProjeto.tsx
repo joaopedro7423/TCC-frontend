@@ -1,4 +1,4 @@
-import { Stack, Text, Flex } from "@chakra-ui/react";
+import { Stack, Text, Flex, VStack, Spacer } from "@chakra-ui/react";
 
 import { api } from "services/api";
 import { useEffect, useState } from "react";
@@ -39,12 +39,12 @@ export function InformacoesProjeto({ id_project }: ProjectProps) {
 
   return (
     <>
-      <Stack direction={["column"]} spacing="1rem" align="stretch">
+      <VStack px={7} mt={5} spacing={5} align="stretch" w="100%">
         <Text>Título: {projeto?.title}</Text>
         <Text>Descrição: {projeto?.description}</Text>
-
+        <Spacer />
         <DeletProjeto id={id_project} />
-      </Stack>
+      </VStack>
     </>
   );
 }

@@ -66,9 +66,9 @@ export default function DeletProjeto(proj: IdProjetoProps) {
         onClick={handleDeletCampus}
         colorScheme="red"
         isLoading={loading}
+        w="100%"
       >
-        Deseja realmente deletar esse projeto?
-       
+        Deletar projeto
       </Button>
     </>
   );

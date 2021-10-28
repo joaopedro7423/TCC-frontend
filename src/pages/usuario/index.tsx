@@ -1,4 +1,12 @@
-import { useToast, Button, Stack } from "@chakra-ui/react";
+import {
+  useToast,
+  Center,
+  VStack,
+  Button,
+  Stack,
+  Heading,
+  SimpleGrid,
+} from "@chakra-ui/react";
 
 import { useContext, useEffect, useState } from "react";
 
@@ -14,6 +22,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Input } from "components/shared/Input";
 import { api } from "services/api";
 import ICredentiasUser from "interfaces/credentialsUsers";
+import { BoxShadown } from "components/shared/Box";
 
 type CadastroFormData = {
   curso: string;
@@ -77,12 +86,6 @@ const Usuario = () => {
             authorization: `Bearear ${token}`,
           },
         }
-
-        /* {
-        headers: {
-          authorization: `Bearear ${}`
-        }
-      }*/
       );
 
       signOut();
@@ -97,7 +100,6 @@ const Usuario = () => {
         isClosable: true,
         position: "top-right",
       });
-
     } catch (error: any) {
       //console.log(error.response.data);
       if (error.response) {
@@ -174,53 +176,69 @@ const Usuario = () => {
   return (
     <>
       <SidebarWithHeader>
-        <Stack
-          spacing={3}
-          w="100%"
-          d="block"
-          as="form"
-          onSubmit={handleSubmit(handleUpdateUser)}
-        >
-          <Input
-            defaultValue={defaultUser?.name}
-            placeholder="Nome:"
-            type="name"
-            {...register("nome")}
-            error={errors.nome}
-          ></Input>
-          <Input
-            defaultValue={defaultUser?.email}
-            placeholder="Email: "
-            type="email"
-            {...register("email")}
-            error={errors.email}
-          ></Input>
-          <Input
-            placeholder="Password:"
-            type="password"
-            {...register("password")}
-            error={errors.password}
-          ></Input>
-          <Button
-            type="submit"
-            w="100%"
-            mb={6}
-            colorScheme="telegram"
-            isLoading={loading}
+        <BoxShadown>
+          <Heading mb={8} size="lg">
+            {" "}
+            Editar Minha Conta:
+          </Heading>
+
+          <SimpleGrid
+            display={{ base: "block", md: "grid" }}
+            columns={2}
+            spacing={10}
           >
-            Atualizar
-          </Button>
-        </Stack>
-        <Stack mt={6} w="100%">
-          <Button
-            w="100%"
-            onClick={handleDeletUser}
-            colorScheme="red"
-            isLoading={loading}
-          >
-            Encerrar a minha conta
-          </Button>
-        </Stack>
+            <Stack
+              p={5}
+              spacing={3}
+              w="100%"
+              d="block"
+              as="form"
+              onSubmit={handleSubmit(handleUpdateUser)}
+            >
+              <Input
+                defaultValue={defaultUser?.name}
+                placeholder="Nome:"
+                type="name"
+                {...register("nome")}
+                error={errors.nome}
+              ></Input>
+              <Input
+                defaultValue={defaultUser?.email}
+                placeholder="Email: "
+                type="email"
+                {...register("email")}
+                error={errors.email}
+              ></Input>
+              <Input
+                placeholder="Password:"
+                type="password"
+                {...register("password")}
+                error={errors.password}
+              ></Input>
+            </Stack>
+            <VStack spacing={10} mt={6} w="100%">
+              <Button
+                mt={3}
+                type="submit"
+                w="100%"
+                mb={6}
+                colorScheme="telegram"
+                isLoading={loading}
+              >
+                Atualizar
+              </Button>
+              <Button
+                mt={3}
+                w="100%"
+                onClick={handleDeletUser}
+                colorScheme="red"
+                isLoading={loading}
+              >
+                Encerrar a minha conta
+              </Button>
+            </VStack>
+          </SimpleGrid>
+        </BoxShadown>
       </SidebarWithHeader>
     </>
   );
@@ -233,24 +251,3 @@ export const getServerSideProps = withSSRAuthenticated(async (ctx) => {
     props: {},
   };
 });
-
-/*
-function Component() {
-
-    const userCanSeeButton = useCan("student")
-
-    return (
-        <>
-
-        <Can permission="adm">
-            <Text>Só adm pode ver</Text>
-            <Button>Adm</Button>
-        </Can>
-
-      {userCanSeeButton &&  <Button>Enviar Atividade</Button>}
-      </>
-    )
-}
-issoé do repositorio do git do lucas uma função do components que da a permissão de acesso a sua escolha
-e fazer o hook do can
-*/
