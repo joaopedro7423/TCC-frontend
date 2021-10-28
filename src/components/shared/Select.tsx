@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { FieldError } from "react-hook-form";
 
-type Option = { value: string; text: string };
+type Option = { value: string; text: string; isDisabled: boolean };
 
 interface SelectProps extends ChakraSelectProps {
   label?: string;
@@ -58,13 +58,14 @@ const SelectBase: ForwardRefRenderFunction<HTMLSelectElement, SelectProps> = (
             style={{ color: "#000" }}
             value={option.value}
             key={option.value}
+            disabled={option.isDisabled}
           >
             {option.text}
           </option>
         ))}
       </ChakraSelect>
       {!!error && (
-        <FormErrorMessage  fontWeight="semibold">
+        <FormErrorMessage fontWeight="semibold">
           {error.message}
         </FormErrorMessage>
       )}

@@ -112,6 +112,7 @@ export function CadastroCursos() {
           options={campus.map((campu) => ({
             value: campu.id,
             text: campu.name,
+            isDisabled:false
           }))}
           {...register("campus")}
           error={errors.campus}
