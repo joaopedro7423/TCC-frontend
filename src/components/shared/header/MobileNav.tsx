@@ -119,7 +119,7 @@ export const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                   colorScheme="red"
                   isLoading={loading}
                 >
-                  Log Out
+                  Sair
                 </Button>
               </MenuItem>
             </MenuList>
