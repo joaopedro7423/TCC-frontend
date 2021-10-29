@@ -111,7 +111,7 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
 
   return (
     <>
-      <Flex
+      <VStack
         transition="3s ease"
         bg={useColorModeValue("white", "gray.900")}
         borderRight="2px"
@@ -149,7 +149,7 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
           <CloseButton onClick={onClose} />
         </Flex>
 
-        <Box pb={12} flex="4">
+        <Box>
           {LinkItems.map((link, index) => (
             <NavItem
               key={index}
@@ -161,15 +161,23 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             </NavItem>
           ))}
         </Box>
-
+        {user?.role == "student" && (
+          <Box w="90%" h="40vh">
+            <NotificationSpace />
+          </Box>
+        )}
         <Spacer />
 
         <Box pb={3}>
           <Box pb={3}>
             <NextLink href={`/usuario`}>
-            <NavItem icon={VscSettingsGear} link={`/usuario`} role={`${user?.role}`}>
-              Editar Conta
-            </NavItem>
+              <NavItem
+                icon={VscSettingsGear}
+                link={`/usuario`}
+                role={`${user?.role}`}
+              >
+                Editar Conta
+              </NavItem>
             </NextLink>
           </Box>
           <Button
@@ -183,9 +191,7 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             Sair
           </Button>
         </Box>
-
-        {/* {user?.role == "student" && <NotificationSpace />} */}
-      </Flex>
+      </VStack>
     </>
   );
 };
