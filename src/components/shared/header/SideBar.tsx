@@ -162,7 +162,7 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
           ))}
         </Box>
         {user?.role == "student" && (
-          <Box w="90%" h="40vh">
+          <Box w="90%" minH="36" h="50vh">
             <NotificationSpace />
           </Box>
         )}
