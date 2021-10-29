@@ -88,14 +88,14 @@ export function CadastroProposta() {
 
   return (
     <>
-      <VStack w="100%" as="form" onSubmit={handleSubmit(handleCreateCurso)}>
+      <VStack px={5} spacing={7} w="100%" as="form" onSubmit={handleSubmit(handleCreateCurso)}>
         <Input
           placeholder="Titulo:"
           type="name"
           {...register("title")}
           error={errors.title}
         />
-        <HStack w="100%">
+       
           <Textarea
             mt={6}
             borderColor="black"
@@ -106,14 +106,14 @@ export function CadastroProposta() {
           />
           <Button
             p={6}
-            px={8}
+            w="100%"
             type="submit"
             colorScheme="green"
             isLoading={loading}
           >
             Cadastrar
           </Button>
-        </HStack>
+     
       </VStack>
     </>
   );

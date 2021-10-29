@@ -176,7 +176,8 @@ const Usuario = () => {
   return (
     <>
       <SidebarWithHeader>
-        <BoxShadown>
+        <Center>
+        <BoxShadown minW={{base:"none" , md: "30rem"}}  w={{base: "100%", md: "auto"}}>
           <Heading mb={8} size="lg">
             {" "}
             Editar Minha Conta:
@@ -184,9 +185,10 @@ const Usuario = () => {
 
           <SimpleGrid
             display={{ base: "block", md: "grid" }}
-            columns={2}
+            columns={1}
             spacing={10}
           >
+         
             <Stack
               p={5}
               spacing={3}
@@ -195,6 +197,7 @@ const Usuario = () => {
               as="form"
               onSubmit={handleSubmit(handleUpdateUser)}
             >
+              <Heading size="sm">Informações pessoais:</Heading>
               <Input
                 defaultValue={defaultUser?.name}
                 placeholder="Nome:"
@@ -215,8 +218,6 @@ const Usuario = () => {
                 {...register("password")}
                 error={errors.password}
               ></Input>
-            </Stack>
-            <VStack spacing={10} mt={6} w="100%">
               <Button
                 mt={3}
                 type="submit"
@@ -227,6 +228,9 @@ const Usuario = () => {
               >
                 Atualizar
               </Button>
+            </Stack>
+            <Stack p={5} spacing={10} mt={6} w="100%">
+            <Heading size="sm">Gerenciar Conta:</Heading>
               <Button
                 mt={3}
                 w="100%"
@@ -236,9 +240,10 @@ const Usuario = () => {
               >
                 Encerrar a minha conta
               </Button>
-            </VStack>
+            </Stack>
           </SimpleGrid>
         </BoxShadown>
+        </Center>
       </SidebarWithHeader>
     </>
   );
