@@ -8,7 +8,6 @@ import {
   Text,
   Center,
   VStack,
-  Heading,
   Divider,
   Spacer,
   Button,
@@ -29,6 +28,9 @@ interface SidebarProps extends BoxProps {
   onClose: () => void;
 }
 let cargo: {} | null | undefined;
+let curso: {} | null | undefined;
+let campus: {} | null | undefined;
+let nome: {} | null | undefined;
 
 export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   const { user, token, signOut } = useContext(AuthContext);
@@ -107,6 +109,9 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         cargo = "Adiministrador";
         break;
     }
+    curso = user.course.name;
+    campus = user.course.campus.name;
+    nome = user?.name;
   }, []);
 
   return (
@@ -123,20 +128,13 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         h="100vh"
         {...rest}
       >
-        <Box py={6}>
-          <Center>
-            <Text fontWeight="bold">{user?.course.name} </Text>
-          </Center>
-          <Center>
-            <Text fontWeight="bold">{user?.course.campus.name}</Text>
-          </Center>
-          <Center>
-            <Text>Nome: {user?.name}</Text>
-          </Center>{" "}
-          <Center>
-            <Text>Cargo: {cargo}</Text>
-          </Center>
-        </Box>
+        <VStack py={6}>
+          <Text fontWeight="bold">{curso} </Text>
+          <Text fontWeight="bold">{campus}</Text>
+          <Text>Nome: {nome}</Text>
+          <Text>Cargo: {cargo}</Text>
+        </VStack>
+
         <Divider />
 
         <Flex
@@ -161,11 +159,7 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             </NavItem>
           ))}
         </Box>
-        {user?.role == "student" && (
-          <Box w="90%" minH="36" h="50vh">
-            <NotificationSpace />
-          </Box>
-        )}
+        {user?.role == "student" && <NotificationSpace />}
         <Spacer />
 
         <Box pb={3}>
@@ -173,7 +167,7 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             <NextLink href={`/usuario`}>
               <NavItem
                 icon={VscSettingsGear}
-                link={`/usuario`}
+                //link={`/usuario`}
                 role={`${user?.role}`}
               >
                 Editar Conta
