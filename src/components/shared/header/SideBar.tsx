@@ -12,6 +12,9 @@ import {
   Spacer,
   Button,
   useToast,
+  Grid,
+  GridItem,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { api } from "services/api";
 import { AuthContext } from "context/auth";
@@ -39,6 +42,11 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   const [notifi, setNotifi] = useState<NotificationResponse[]>([]);
 
   const toast = useToast();
+
+  const isWideVersion = useBreakpointValue({
+    base: false,
+    md: true,
+  });
 
   type NotificationResponse = {
     id: string;
@@ -109,66 +117,51 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   }, []);
 
   return (
-    <>
-      <VStack
-        transition="3s ease"
-        bg={useColorModeValue("white", "gray.900")}
-        borderRight="2px"
-        borderRightColor={useColorModeValue("gray.200", "gray.700")}
-        w={{ base: "full", md: 60 }}
-        pos="fixed"
-        flexDir="column"
-        justifyContent="space-between"
-        h="100vh"
-        {...rest}
-      >
-        <Box py={6}>
-          <Center>
-            <Text fontWeight="bold">{user?.course.name} </Text>
-          </Center>
-          <Center>
-            <Text fontWeight="bold">{user?.course.campus.name}</Text>
-          </Center>
-          <Center>
-            <Text>Nome: {user?.name}</Text>
-          </Center>{" "}
-          <Center>
-            <Text>Cargo: {cargo}</Text>
-          </Center>
-        </Box>
-        <Divider />
+    <Grid
+      templateColumns="1fr"
+      templateRows={{ base: "1fr 1fr 1fr 1fr 1fr", md: "2fr 3fr 3fr 2fr" }}
+      transition="3s ease"
+      bg={useColorModeValue("white", "gray.900")}
+      borderRight="2px"
+      borderRightColor={useColorModeValue("gray.200", "gray.700")}
+      w={{ base: "full", md: 60 }}
+      pos="fixed"
+      h="100%"
+      {...rest}
+    >
+      <GridItem pt={6} textAlign="center">
+        <Text fontWeight="bold">{user?.course.name} </Text>
+        <Text fontWeight="bold">{user?.course.campus.name}</Text>
+        <Text>Nome: {user?.name}</Text>
+        <Text>Cargo: {cargo}</Text>
+        <Divider pt={6} />
+      </GridItem>
 
-        <Flex
-          h="20"
-          alignItems="center"
-          mx="8"
-          justifyContent="space-between"
-          display={{ base: "flex", md: "none" }}
-        >
+      {!isWideVersion && (
+        <GridItem alignItems="center" mx="8" justifyContent="space-between">
           <CloseButton onClick={onClose} />
-        </Flex>
+        </GridItem>
+      )}
 
-        <Box>
-          {LinkItems.map((link, index) => (
-            <NavItem
-              key={index}
-              icon={link.icon}
-              role={user?.role}
-              link={link.link}
-            >
-              {link.name}
-            </NavItem>
-          ))}
-        </Box>
-        {user?.role == "student" && (
-          <Box w="90%" minH="36" maxH="50vh">
-            <NotificationSpace />
-          </Box>
-        )}
-        <Spacer />
+      <GridItem >
+        {LinkItems.map((link, index) => (
+          <NavItem
+            key={index}
+            icon={link.icon}
+            role={user?.role}
+            link={link.link}
+          >
+            {link.name}
+          </NavItem>
+        ))}
+      </GridItem>
 
+      <GridItem >
+        {user?.role == "student" && <NotificationSpace />}
+      </GridItem>
+
+      <GridItem  pb={3}>
         <Box pb={3}>
-          <Box pb={3}>
             <NextLink href={`/usuario`}>
               <NavItem
                 icon={VscSettingsGear}
@@ -189,8 +182,7 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
           >
             Sair
           </Button>
-        </Box>
-      </VStack>
-    </>
+      </GridItem>
+    </Grid>
   );
 };

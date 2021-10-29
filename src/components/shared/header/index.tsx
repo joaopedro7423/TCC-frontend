@@ -20,7 +20,7 @@ export default function SidebarWithHeader({
     <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
       <SidebarContent
         onClose={() => onClose}
-        display={{ base: "none", md: "flex" }}
+        display={{ base: "none", md: "grid" }}
       />
 
       <Drawer

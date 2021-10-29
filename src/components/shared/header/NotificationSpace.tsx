@@ -1,4 +1,4 @@
-import { Flex, Text, VStack } from "@chakra-ui/react";
+import { Flex, Text, VStack, Box } from "@chakra-ui/react";
 import { useContext, useEffect, useState } from "react";
 import NotificationsCard from "./NotificationsCard";
 import { AuthContext } from "context/auth";
@@ -31,14 +31,14 @@ export default function NotificationSpace() {
   }, []);
 
   return (
-    <Flex
-      flex="1"
+    <Box
+      d="flex"
       flexDir="column"
       alignItems="center"
       borderRadius={12}
       p={3}
       bg="gray.100"
-      h="69%"
+      h="100%"
     >
       <Text
         mb={3}
@@ -50,7 +50,14 @@ export default function NotificationSpace() {
         Notificações:
       </Text>
 
-      <VStack overflow="scroll" overflowX="hidden" spacing={5}>
+      <VStack
+        h='100%'
+        maxH='28vh'
+        overflowY="scroll"
+      
+        overflowX="hidden"
+        spacing={5}
+      >
         {notifi.map((item, index) => (
           <NotificationsCard
             key={index}
@@ -59,6 +66,6 @@ export default function NotificationSpace() {
           />
         ))}
       </VStack>
-    </Flex>
+    </Box>
   );
 }
