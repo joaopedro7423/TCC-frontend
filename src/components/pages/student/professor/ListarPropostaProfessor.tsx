@@ -35,11 +35,11 @@ export function ListarPropostaProfessor() {
 
   return (
     <>
-      <Table w="100%" variant="simple">
+      <Table w="100%" variant="unstyled">
         <Thead>
           <Tr>
             <Th>Título:</Th>
-            <Th> Visualizar</Th>
+            <Th><Flex justifyContent="flex-end">Visualizar</Flex></Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -47,7 +47,7 @@ export function ListarPropostaProfessor() {
             <Tr key={index}>
               <Td>{item.title}</Td>
               <Td>
-                <Flex>
+                <Flex Flex justifyContent="flex-end">
                   <AprovarProposta
                     id={item.id}
                     description={item.description}

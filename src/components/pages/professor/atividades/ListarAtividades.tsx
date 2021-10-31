@@ -23,43 +23,81 @@ export function ListarAtividades({ id_project }: ProjectProps) {
 
   useEffect(() => {
     async function GetAtividade() {
-       // console.log(id_project)
-      const response = await api.get<AtividadesResponse[]>(`/activities/listbyproject/${id_project}`, {
-        headers: {
-          authorization: `Bearear ${token}`,
-        },
-      });
+      // console.log(id_project)
+      const response = await api.get<AtividadesResponse[]>(
+        `/activities/listbyproject/${id_project}`,
+        {
+          headers: {
+            authorization: `Bearear ${token}`,
+          },
+        }
+      );
 
       setAtivi(response.data);
-      ////console.log(response);
+
+      //console.log(response);
     }
     GetAtividade();
   }, []);
 
+  function FormatStatusName(status: any) {
+    switch (status) {
+      case "NEW":
+        return "Novo";
+      case "CANCELED":
+        return "Cancelado";
+
+      case "FINISHED":
+        return "Finalizado";
+      case "PAUSE":
+        return "Parado";
+      case "IN_PROGRESS":
+        return "Em Progresso";
+      default:
+        return "Status não encontrado";
+    }
+  }
+
   return (
     <>
-      <Table variant="simple">
+      <Table variant="unstyled">
         <Thead>
           <Tr>
             <Th>Nome:</Th>
-            <Th>Status:</Th>
-            <Th>Editar/Excluir</Th>
+            <Th>
+              {" "}
+              <Flex justifyContent="center">Status:</Flex>
+            </Th>
+            <Th>
+              <Flex justifyContent="flex-end">Editar/Excluir</Flex>
+            </Th>
           </Tr>
         </Thead>
         <Tbody>
           {atividade.map((item, index) => (
-            <Tr key={index}>
+            <Tr
+              key={index}
+              _hover={{
+                bg: "gray.200",
+              }}
+            >
               <Td>{item.title}</Td>
 
-              <Td>{item.status}</Td>
+              <Td>
+                <Flex justifyContent="center">
+                  {FormatStatusName(item.status)}
+                </Flex>
+              </Td>
 
               <Td>
-                <EditarAtividade
-                  id={item.id}
-                  title={item.title}
-                  description={item.description}
-                />
-                <DeletAtividade id={item.id} />
+                <Flex justifyContent="flex-end">
+                  <EditarAtividade
+                    id={item.id}
+                    title={item.title}
+                    description={item.description}
+                  />
+                  <DeletAtividade id={item.id} />
+                </Flex>
               </Td>
             </Tr>
           ))}

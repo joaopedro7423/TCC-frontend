@@ -1,4 +1,4 @@
-import { SimpleGrid } from "@chakra-ui/react";
+import { SimpleGrid, Wrap, WrapItem, Grid } from "@chakra-ui/react";
 
 import { api } from "services/api";
 import { useEffect, useState } from "react";
@@ -40,20 +40,22 @@ export function ListarAtividades({ id_project }: ProjectProps) {
 
   return (
     <>
-      <SimpleGrid columns={[1, 2, 1, 3]}>
+      <Grid  w="100%" gap={4} templateColumns={{base:"1fr",md:"1fr 1fr", lg: "1fr 1fr", xl:"1fr 1fr 1fr" }}>
         {atividade.map(function (data) {
           const { id, title, description, status } = data;
           return (
-            <CardAtividade
-              key={id}
-              id_atividade={id}
-              title={title}
-              description={description}
-              status={status}
-            />
+          
+              <CardAtividade
+                key={id}
+                id_atividade={id}
+                title={title}
+                description={description}
+                status={status}
+              />
+           
           );
         })}
-      </SimpleGrid>
+      </Grid>
     </>
   );
 }

@@ -28,26 +28,34 @@ export function ListarPropostaAlunos() {
       );
 
       setPropos(response.data);
-     // console.log(response);
+      // console.log(response);
     }
     GetPropos();
   }, []);
 
   return (
     <>
-      <Table w="100%" variant="simple">
+      <Table w="100%" variant="unstyled">
         <Thead>
           <Tr>
             <Th>Título:</Th>
-            <Th> Visualizar</Th>
+            <Th>
+              {" "}
+              <Flex justifyContent="flex-end">Visualizar </Flex>
+            </Th>
           </Tr>
         </Thead>
         <Tbody>
           {notificacao.map((item, index) => (
-            <Tr key={index}>
+            <Tr
+              key={index}
+              _hover={{
+                bg: "gray.200",
+              }}
+            >
               <Td>{item.title}</Td>
               <Td>
-                <Flex>
+                <Flex justifyContent="flex-end">
                   <AprovarProposta
                     id={item.id}
                     description={item.description}

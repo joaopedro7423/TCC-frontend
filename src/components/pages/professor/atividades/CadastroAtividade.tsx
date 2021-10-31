@@ -4,6 +4,8 @@ import {
   SimpleGrid,
   Button,
   HStack,
+  VStack,
+  Spacer,
 } from "@chakra-ui/react";
 
 import * as yup from "yup";
@@ -99,7 +101,13 @@ export function CadastroAtividade({ id_project }: ProjectProps) {
 
   return (
     <>
-      <HStack w="100%" as="form" onSubmit={handleSubmit(handleCreateCurso)}>
+      <VStack
+        spacing={5}
+        w="100%"
+        as="form"
+        onSubmit={handleSubmit(handleCreateCurso)}
+        px={7}
+      >
         <Input
           placeholder="Titulo:"
           type="name"
@@ -113,7 +121,9 @@ export function CadastroAtividade({ id_project }: ProjectProps) {
           {...register("description")}
           error={errors.description}
         />
+        <Spacer />
         <Button
+          w="full"
           p={6}
           px={8}
           type="submit"
@@ -122,7 +132,7 @@ export function CadastroAtividade({ id_project }: ProjectProps) {
         >
           Cadastrar
         </Button>
-      </HStack>
+      </VStack>
     </>
   );
 }
